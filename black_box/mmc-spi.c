@@ -13,11 +13,11 @@
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 
-#define UNKNOWNSIMBOLPAUSE 700 // pause for space or unknown simbol
-#define LINEPAUSE	200
-#define POINPAUSE	100
-#define WAITPAUSE	100
-#define SEPARATEPAUSE 300
+#define POINPAUSE			PointTime * 50
+#define LINEPAUSE			POINPAUSE * 4
+#define WAITPAUSE			POINPAUSE
+#define SEPARATEPAUSE 		POINPAUSE * 3
+#define UNKNOWNSIMBOLPAUSE 	POINPAUSE * 7 // pause for space or unknown simbol
 
 #define MESSLEN 128
 uint8_t message[MESSLEN];
@@ -57,7 +57,8 @@ void mmc_read_block(uint16_t block_number, uint8_t* block_address);
 
 char init_abc(uint8_t *block_address, uint16_t length)
 {
-	for (int i = 0; i < TOTALLEN; i++){
+	PointTime = block_address[0] - 49; // atoi "char-49=digit"
+	for (int i = 1; i < TOTALLEN; i++){
 		abc[i].code = block_address[i];
 	}
 }

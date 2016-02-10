@@ -12,6 +12,8 @@ typedef struct {
 #define DIGITLEN 10
 #define TOTALLEN 42
 
+static char PointTime = 1;
+
 static MORZE_SYMBOL abc[41] = {
 	{0, 0b01000000, 2}, // À
 	{0, 0b10000000, 3}, // Á
