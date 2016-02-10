@@ -35,64 +35,53 @@
 /*-------------------------------------------------------------------------*/
 
 #include <avr/io.h>			/* Include device specific declareation file here */
-#include <avr/delay.h>
 
 
-#define DO_P 0b00100000 // PB6
-#define DI_P 0b00010000 // PB5
-#define CK_P 0b01000000 // PB7
-#define CS_P 0b00001000 // PB4
+#define DO_INIT()					/* Initialize port for MMC DO as input */
+#define DO			(PINB &	0x01)	/* Test for MMC DO ('H':true, 'L':false) */
+
+#define DI_INIT()	DDRB  |= 0x02	/* Initialize port for MMC DI as output */
+#define DI_H()		PORTB |= 0x02	/* Set MMC DI "high" */
+#define DI_L()		PORTB &= 0xFD	/* Set MMC DI "low" */
+
+#define CK_INIT()	DDRB  |= 0x04	/* Initialize port for MMC SCLK as output */
+#define CK_H()		PORTB |= 0x04	/* Set MMC SCLK "high" */
+#define	CK_L()		PORTB &= 0xFB	/* Set MMC SCLK "low" */
+
+#define CS_INIT()	DDRB  |= 0x08	/* Initialize port for MMC CS as output */
+#define	CS_H()		PORTB |= 0x08	/* Set MMC CS "high" */
+#define CS_L()		PORTB &= 0xF7	/* Set MMC CS "low" */
 
 
-
-#define DI 6                         // Port B bit 6 (pin7): data in (data from MMC)
-#define DT 5                        // Port B bit 5 (pin6): data out (data to MMC)
-#define CLK 7                     // Port B bit 7 (pin8): clock
-#define CS 4    
-
-
-void ini_SPI(void) {
-     DDRB &= ~(_BV(DI));                     //input
-     DDRB |= _BV(CLK);                     //outputs
-     DDRB |= _BV(DT);                     //outputs
-     DDRB |= _BV(CS);                     //outputs
- 
- SPCR=0x50;
-SPSR=0x01;
-
-}
-
-char SPI_sendchar(char chr) {
-     char receivedchar = 0;
-     SPDR = chr;
-     while(!(SPSR & (1<<SPIF)));
-     receivedchar = SPDR;
-     return (receivedchar);
-}
-
-
-#define DO_INIT()					// Initialize port for MMC DO as input 
-#define DO			(PINB &	DO_P)	// Test for MMC DO ('H':true, 'L':false) 
-
-#define DI_INIT()	DDRB  |= DI_P	// Initialize port for MMC DI as output 
-#define DI_H()		PORTB |= DI_P	// Set MMC DI "high" 
-#define DI_L()		PORTB &= ~DI_P	// Set MMC DI "low" 
-
-#define CK_INIT()	DDRB  |= CK_P	// Initialize port for MMC SCLK as output 
-#define CK_H()		PORTB |= CK_P	// Set MMC SCLK "high" 
-#define	CK_L()		PORTB &= ~CK_P	// Set MMC SCLK "low" 
-
-#define CS_INIT()	DDRB  |= CS_P	// Initialize port for MMC CS as output 
-#define	CS_H()		PORTB |= CS_P	// Set MMC CS "high" 
-#define CS_L()		PORTB &= ~CS_P	// Set MMC CS "low" 
-
-
-/*
-void _delay_us (UINT n)	// Delay n microseconds (avr-gcc -Os) 
+static
+void dly_us (UINT n)	/* Delay n microseconds (avr-gcc -Os) */
 {
-	(n);
+	do {
+		PINB;
+#if F_CPU >= 6000000
+		PINB;
+#endif
+#if F_CPU >= 7000000
+		PINB;
+#endif
+#if F_CPU >= 8000000
+		PINB;
+#endif
+#if F_CPU >= 9000000
+		PINB;
+#endif
+#if F_CPU >= 10000000
+		PINB;
+#endif
+#if F_CPU >= 12000000
+		PINB; PINB;
+#endif
+#if F_CPU >= 14000000
+#error Too fast clock
+#endif
+	} while (--n);
 }
-*/
+
 
 
 /*--------------------------------------------------------------------------
@@ -148,8 +137,22 @@ void xmit_mmc (
 
 	do {
 		d = *buff++;	/* Get a byte to be sent */
-		SPI_sendchar(d);
-
+		if (d & 0x80) DI_H(); else DI_L();	/* bit7 */
+		CK_H(); CK_L();
+		if (d & 0x40) DI_H(); else DI_L();	/* bit6 */
+		CK_H(); CK_L();
+		if (d & 0x20) DI_H(); else DI_L();	/* bit5 */
+		CK_H(); CK_L();
+		if (d & 0x10) DI_H(); else DI_L();	/* bit4 */
+		CK_H(); CK_L();
+		if (d & 0x08) DI_H(); else DI_L();	/* bit3 */
+		CK_H(); CK_L();
+		if (d & 0x04) DI_H(); else DI_L();	/* bit2 */
+		CK_H(); CK_L();
+		if (d & 0x02) DI_H(); else DI_L();	/* bit1 */
+		CK_H(); CK_L();
+		if (d & 0x01) DI_H(); else DI_L();	/* bit0 */
+		CK_H(); CK_L();
 	} while (--bc);
 }
 
@@ -171,8 +174,23 @@ void rcvr_mmc (
 	DI_H();	/* Send 0xFF */
 
 	do {
-		
-		*buff++ = SPI_sendchar(0xFF);			/* Store a received byte */
+		r = 0;	 if (DO) r++;	/* bit7 */
+		CK_H(); CK_L();
+		r <<= 1; if (DO) r++;	/* bit6 */
+		CK_H(); CK_L();
+		r <<= 1; if (DO) r++;	/* bit5 */
+		CK_H(); CK_L();
+		r <<= 1; if (DO) r++;	/* bit4 */
+		CK_H(); CK_L();
+		r <<= 1; if (DO) r++;	/* bit3 */
+		CK_H(); CK_L();
+		r <<= 1; if (DO) r++;	/* bit2 */
+		CK_H(); CK_L();
+		r <<= 1; if (DO) r++;	/* bit1 */
+		CK_H(); CK_L();
+		r <<= 1; if (DO) r++;	/* bit0 */
+		CK_H(); CK_L();
+		*buff++ = r;			/* Store a received byte */
 	} while (--bc);
 }
 
@@ -192,7 +210,7 @@ int wait_ready (void)	/* 1:OK, 0:Timeout */
 	for (tmr = 5000; tmr; tmr--) {	/* Wait for ready in timeout of 500ms */
 		rcvr_mmc(&d, 1);
 		if (d == 0xFF) break;
-		(100);
+		dly_us(100);
 	}
 
 	return tmr ? 1 : 0;
@@ -251,7 +269,7 @@ int rcvr_datablock (	/* 1:OK, 0:Failed */
 	for (tmr = 1000; tmr; tmr--) {	/* Wait for data packet in timeout of 100ms */
 		rcvr_mmc(d, 1);
 		if (d[0] != 0xFF) break;
-		(100);
+		dly_us(100);
 	}
 	if (d[0] != 0xFE) return 0;		/* If not valid data token, return with error */
 
@@ -379,7 +397,7 @@ DSTATUS disk_initialize (
 
 	if (drv) return RES_NOTRDY;
 
-	_delay_us(10000);			/* 10ms */
+	dly_us(10000);			/* 10ms */
 	CS_INIT(); CS_H();		/* Initialize port pin tied to CS */
 	CK_INIT(); CK_L();		/* Initialize port pin tied to SCLK */
 	DI_INIT();				/* Initialize port pin tied to DI */
@@ -394,7 +412,7 @@ DSTATUS disk_initialize (
 			if (buf[2] == 0x01 && buf[3] == 0xAA) {		/* The card can work at vdd range of 2.7-3.6V */
 				for (tmr = 1000; tmr; tmr--) {			/* Wait for leaving idle state (ACMD41 with HCS bit) */
 					if (send_cmd(ACMD41, 1UL << 30) == 0) break;
-					_delay_us(1000);
+					dly_us(1000);
 				}
 				if (tmr && send_cmd(CMD58, 0) == 0) {	/* Check CCS bit in the OCR */
 					rcvr_mmc(buf, 4);
@@ -409,7 +427,7 @@ DSTATUS disk_initialize (
 			}
 			for (tmr = 1000; tmr; tmr--) {			/* Wait for leaving idle state */
 				if (send_cmd(cmd, 0) == 0) break;
-				_delay_us(1000);
+				dly_us(1000);
 			}
 			if (!tmr || send_cmd(CMD16, 512) != 0)	/* Set R/W block length to 512 */
 				ty = 0;

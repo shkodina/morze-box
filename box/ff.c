@@ -119,10 +119,6 @@
 #include "diskio.h"		/* Declarations of disk I/O functions */
 
 
-DWORD get_fattime (void)
-{
-	return 0;
-}
 
 
 /*--------------------------------------------------------------------------
