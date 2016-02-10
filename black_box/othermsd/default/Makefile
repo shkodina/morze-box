@@ -1,11 +1,11 @@
 ###############################################################################
-# Makefile for the project 04
+# Makefile for the project othermsd
 ###############################################################################
 
 ## General Flags
-PROJECT = 04
+PROJECT = othermsd
 MCU = atmega16
-TARGET = 04.elf
+TARGET = othermsd.elf
 CC = avr-gcc
 
 CPP = avr-g++
@@ -25,7 +25,7 @@ ASMFLAGS += -x assembler-with-cpp -Wa,-gdwarf2
 
 ## Linker flags
 LDFLAGS = $(COMMON)
-LDFLAGS +=  -Wl,-Map=04.map
+LDFLAGS +=  -Wl,-Map=othermsd.map
 
 
 ## Intel Hex file production flags
@@ -37,25 +37,22 @@ HEX_EEPROM_FLAGS += --change-section-lma .eeprom=0 --no-change-warnings
 
 
 ## Objects that must be built in order to link
-OBJECTS = 04.o sdmm.o ff.o main.o 
+OBJECTS = othermsd.o mmc-spi.o spi.o 
 
 ## Objects explicitly added by the user
 LINKONLYOBJECTS = 
 
 ## Build
-all: $(TARGET) 04.hex 04.eep 04.lss size
+all: $(TARGET) othermsd.hex othermsd.eep othermsd.lss size
 
 ## Compile
-04.o: ../04.c
+othermsd.o: ../othermsd.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
-sdmm.o: ../sdmm.c
+mmc-spi.o: ../../mmc-spi.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
-ff.o: ../ff.c
-	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
-
-main.o: ../main.c
+spi.o: ../../spi.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
 ##Link
@@ -78,7 +75,7 @@ size: ${TARGET}
 ## Clean target
 .PHONY: clean
 clean:
-	-rm -rf $(OBJECTS) 04.elf dep/* 04.hex 04.eep 04.lss 04.map
+	-rm -rf $(OBJECTS) othermsd.elf dep/* othermsd.hex othermsd.eep othermsd.lss othermsd.map
 
 
 ## Other dependencies

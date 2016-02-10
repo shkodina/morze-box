@@ -1,0 +1,1 @@
+othermsd.o: ../othermsd.c
