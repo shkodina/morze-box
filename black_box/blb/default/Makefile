@@ -1,11 +1,11 @@
 ###############################################################################
-# Makefile for the project othermsd
+# Makefile for the project blbox6
 ###############################################################################
 
 ## General Flags
-PROJECT = othermsd
-MCU = atmega8
-TARGET = othermsd.elf
+PROJECT = blbox6
+MCU = atmega16
+TARGET = blbox6.elf
 CC = avr-gcc
 
 CPP = avr-g++
@@ -15,7 +15,7 @@ COMMON = -mmcu=$(MCU)
 
 ## Compile options common for all C compilation units.
 CFLAGS = $(COMMON)
-CFLAGS += -Wall -gdwarf-2 -std=gnu99             -DF_CPU=1000000UL -Os -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums
+CFLAGS += -Wall -gdwarf-2 -std=gnu99           -DF_CPU=1000000UL -Os -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums
 CFLAGS += -MD -MP -MT $(*F).o -MF dep/$(@F).d 
 
 ## Assembly specific flags
@@ -25,7 +25,7 @@ ASMFLAGS += -x assembler-with-cpp -Wa,-gdwarf2
 
 ## Linker flags
 LDFLAGS = $(COMMON)
-LDFLAGS +=  -Wl,-Map=othermsd.map
+LDFLAGS +=  -Wl,-Map=blbox6.map
 
 
 ## Intel Hex file production flags
@@ -37,22 +37,28 @@ HEX_EEPROM_FLAGS += --change-section-lma .eeprom=0 --no-change-warnings
 
 
 ## Objects that must be built in order to link
-OBJECTS = spi.o mmc-spi.o othermsd.o 
+OBJECTS = spi.o main.o mmc-spi.o ff.o mysdmmc.o 
 
 ## Objects explicitly added by the user
 LINKONLYOBJECTS = 
 
 ## Build
-all: $(TARGET) othermsd.hex othermsd.eep othermsd.lss size
+all: $(TARGET) blbox6.hex blbox6.eep blbox6.lss size
 
 ## Compile
 spi.o: ../spi.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
+main.o: ../main.c
+	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
+
 mmc-spi.o: ../mmc-spi.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
-othermsd.o: ../othermsd.c
+ff.o: ../ff.c
+	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
+
+mysdmmc.o: ../mysdmmc.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
 ##Link
@@ -75,7 +81,7 @@ size: ${TARGET}
 ## Clean target
 .PHONY: clean
 clean:
-	-rm -rf $(OBJECTS) othermsd.elf dep/* othermsd.hex othermsd.eep othermsd.lss othermsd.map
+	-rm -rf $(OBJECTS) blbox6.elf dep/* blbox6.hex blbox6.eep blbox6.lss blbox6.map
 
 
 ## Other dependencies

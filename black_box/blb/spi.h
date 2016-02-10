@@ -20,9 +20,16 @@
   this software.
 */
 
+#ifndef MYSPIH
+#define MYSPIH
+
+#include "integer.h"
+
 void spi_init(void);
-void spi_send_byte(uint8_t byte);
-uint8_t spi_receive_byte(void);
-uint8_t spi_loopback(uint8_t byte);
-void spi_send(uint8_t* data, uint16_t length);
-void spi_receive(uint8_t* data, uint16_t length);
+void spi_send_byte(BYTE byte);
+BYTE spi_receive_byte(void);
+BYTE spi_loopback(BYTE byte);
+void spi_send(BYTE* data, USHORT length);
+void spi_receive(BYTE* data, USHORT length);
+
+#endif
