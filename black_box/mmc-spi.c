@@ -13,33 +13,13 @@
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 
-#define BIPERDDR	DDRC
-#define BIPERPORT 	PORTC
-#define BIPERPIN 	0
-#define LEDDDR		DDRC
-#define LEDPORT 	PORTC
-#define LEDPIN 		1
+#define UNKNOWNSIMBOLPAUSE 700 // pause for space or unknown simbol
+#define LINEPAUSE	200
+#define POINPAUSE	100
+#define WAITPAUSE	100
+#define SEPARATEPAUSE 300
 
-
-#define MAINPUSETIME		30
-#define POINPAUSE			PointTime 
-#define LINEPAUSE			(POINPAUSE * 4)
-#define WAITPAUSE			(POINPAUSE * 2)
-#define SEPARATEPAUSE 		(POINPAUSE * 4)
-#define UNKNOWNSIMBOLPAUSE 	(POINPAUSE * 7) 
-
-
-/*
-#define MAINPUSETIME		50
-#define POINPAUSE			100 
-#define LINEPAUSE			400
-#define WAITPAUSE			100
-#define SEPARATEPAUSE 		300
-#define UNKNOWNSIMBOLPAUSE 	700 
-*/
-volatile char PointTime = 1;
-
-#define MESSLEN 256
+#define MESSLEN 128
 uint8_t message[MESSLEN];
 
 #define MMC_CMD_SIZE 6
@@ -50,16 +30,12 @@ uint8_t mmc_cmd[MMC_CMD_SIZE];
 
 #define DDR_CS  DDRB
 #define PORT_CS PORTB
-// atmega8
-#define DD_CS   DDB2
-
-//atmega16
-//#define DD_CS   DDB4
+#define DD_CS   DDB4
 
 #define SET_CS()   PORT_CS |= _BV(DD_CS);
 #define CLEAR_CS() PORT_CS &= ~_BV(DD_CS);
 
-#define STARTREADEDBLOCK 77
+#define STARTREADEDBLOCK 66
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
@@ -81,18 +57,8 @@ void mmc_read_block(uint16_t block_number, uint8_t* block_address);
 
 char init_abc(uint8_t *block_address, uint16_t length)
 {
-	PointTime = block_address[0] - 49 + 1; // atoi "char-49=digit"
-
-	for (char l = 0; l < PointTime; l++){
-		UPBIT(LEDPORT, LEDPIN);
-		_delay_ms(250);
-		DOWNBIT(LEDPORT, LEDPIN);
-		_delay_ms(250);
-	
-	}	
-
-	for (int i = 1; i <= TOTALLEN; i++){
-		abc[i-1].code = block_address[i];
+	for (int i = 0; i < TOTALLEN; i++){
+		abc[i].code = block_address[i];
 	}
 }
 
@@ -110,14 +76,7 @@ char init_message(uint8_t *block_address, uint16_t length)
 						block_address[i+3] == 'f')
 					{
 						message[0]=i;
-						
-						UPBIT(LEDPORT, LEDPIN);
-						_delay_ms(250);
-						DOWNBIT(LEDPORT, LEDPIN);
-						_delay_ms(250);
-
-
-/*						int d = 3;
+						int d = 3;
 						while(d--){
 						PORTA = 0b00010000;
 						_delay_ms(300);
@@ -128,13 +87,12 @@ char init_message(uint8_t *block_address, uint16_t length)
 						PORTA = 0b10000000;
 						_delay_ms(300);
 						}
-*/						return 1;
+						return 1;
 					}
 		//PORTC = block_address[i];
 		//_delay_ms(450);
 		message[i+1] = block_address[i];
 	}
-	return 1;
 }
 
 //--------------------------------------------------------------
@@ -152,13 +110,7 @@ char check_block(uint8_t *block_address, uint16_t length)
 				block_address[i+2] == 'x' &&
 				block_address[i+3] == 't')
 			{
-
-				UPBIT(LEDPORT, LEDPIN);
-				_delay_ms(250);
-				DOWNBIT(LEDPORT, LEDPIN);
-				_delay_ms(250);
-
-/*				int d = 3;
+				int d = 3;
 				while(d--){
 					PORTA = 0b11110000;
 					_delay_ms(300);
@@ -167,7 +119,7 @@ char check_block(uint8_t *block_address, uint16_t length)
 					PORTA = 0b01100000;
 					_delay_ms(300);
 				}
-*/				//_delay_ms(1000);
+				//_delay_ms(1000);
 				
 				init_abc(block_address + i + 4, length - i - 4); // munus bytes "text"
 
@@ -178,13 +130,7 @@ char check_block(uint8_t *block_address, uint16_t length)
 						block_address[j+2] == 's' &&
 						block_address[j+3] == 's')
 					{
-
-						UPBIT(LEDPORT, LEDPIN);
-						_delay_ms(250);
-						DOWNBIT(LEDPORT, LEDPIN);
-						_delay_ms(250);
-				
-/*						d = 3;
+						d = 3;
 						while(d--){
 						PORTA = 0b00110000;
 						_delay_ms(300);
@@ -193,7 +139,7 @@ char check_block(uint8_t *block_address, uint16_t length)
 						PORTA = 0b01100000;
 						_delay_ms(300);
 						}
-*/
+
 						init_message(block_address + j + 4, length - j - 4);
 
 						return 1;
@@ -209,7 +155,7 @@ char check_block(uint8_t *block_address, uint16_t length)
 			}
 			//_delay_ms(20);
 		}
-		INVBIT(LEDPORT, LEDPIN);
+		INVBIT(PORTA, 6);
 	}
 	return 0;
 }
@@ -217,68 +163,22 @@ char check_block(uint8_t *block_address, uint16_t length)
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-
-void signal(int time)
-{
-	int my_time = time * MAINPUSETIME;
-
-	UPBIT(BIPERPORT, BIPERPIN);
-	UPBIT(LEDPORT, LEDPIN);
-
-	// 4Khz = 1/0 each 250 uS
-	// 4 switch per 1ms
-
-	my_time *= 8;
-
-	while (my_time-- >= 0){
-		INVBIT(BIPERPORT, BIPERPIN);
-		_delay_us(125);
-	}
-
-	DOWNBIT(BIPERPORT, BIPERPIN);
-	DOWNBIT(LEDPORT, LEDPIN);
-}
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-
-static inline void morze_pause(char countMorzePauseInMs)
-{
-	for(char i = 0; i < countMorzePauseInMs; i++)
-	{
-		//_delay_ms(MAINPUSETIME);
-		_delay_ms(MAINPUSETIME);
-		//INVBIT(PORTA,6);
-		
-	}
-}
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-
 void morze_char(MORZE_SYMBOL simbol)
 {
 	char pos = 8; 
 	for (int i = 0; i < simbol.morsecodlen; i++){
 		pos--;
 		if (simbol.morsecod & (1 << pos)){ // long 	
-			signal(LINEPAUSE);
+			PORTC = 0xff;
+			_delay_ms(LINEPAUSE);		
 		}else{	// short
-			signal(POINPAUSE);
+			PORTC = 0xff;
+			_delay_ms(POINPAUSE);		
 		} 
-
-		DOWNBIT(BIPERPORT, BIPERPIN);
-		DOWNBIT(LEDPORT, LEDPIN);
-		morze_pause(WAITPAUSE);		
-		//_delay_ms(WAITPAUSE);
+		PORTC = 0x00;
+		_delay_ms(WAITPAUSE);		
 	}
 }
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-//--------------------------------------------------------------
 
 void morze_message(void)
 {
@@ -287,72 +187,63 @@ void morze_message(void)
 		for (int i = 0; i < TOTALLEN; i++){
 			if (abc[i].code == message[j])
 				morze_char(abc[i]);
-			if (i == TOTALLEN){
-				//morze_pause(UNKNOWNSIMBOLPAUSE);
+			if (i == TOTALLEN)
 				_delay_ms(UNKNOWNSIMBOLPAUSE);
-			}
 		}
-		morze_pause(SEPARATEPAUSE);
-		//_delay_ms(SEPARATEPAUSE);
-				
+		_delay_ms(SEPARATEPAUSE);		
 	}
- //INVBIT(PORTA, 7);
+ INVBIT(PORTA, 7);
 }
-//--------------------------------------------------------------//
-//--------------------------------------------------------------//
-//--------------------------------------------------------------//
-//																//
-//		MAIN PROGRAMM											//
-//																//
-//--------------------------------------------------------------//
-//--------------------------------------------------------------//
-//--------------------------------------------------------------//		
-																//
-uint8_t mmc_block[MMC_BLOCK_SIZE];								//
-																//
-int main (void)													//
-{	
-//	DDRC=0xff;
-//	DDRA=0xf0;															//
-																//
-	UPBIT(BIPERDDR, BIPERPIN);									//
-	UPBIT(LEDDDR, LEDPIN);										//
-																//
-																//
-																//
-  	// Init the SPI 											//
-	spi_init();													//
-  																//
-  	// Init the MMC 											//
-  	mmc_init();													//
- 																//
-																//
-  	// Read the blocks 											//
-  	int blockNumber = STARTREADEDBLOCK;							//
-																//
-	while (blockNumber++ >= 0){									//
-																//
-		// Reset the MMC buffer 								//
-	  	memset(mmc_block, 0x11, MMC_BLOCK_SIZE);				//
-		// Read block											//
-		mmc_read_block(blockNumber, mmc_block);					//
-		// Check block for my data								//
-		if(check_block(mmc_block, MMC_BLOCK_SIZE))				//
-			break;												//
-	}															//
-																//
-  	// Infinite loop 											//
-  	for(;;){													//
-  		morze_message();										//
-		_delay_ms(10000);										//
-	}															//
-																//
-  return(0);													//
-}																//
-																//
-//--------------------------------------------------------------//
-//--------------------------------------------------------------//
-//--------------------------------------------------------------//
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+//
+//		MAIN PROGRAMM
+//
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+
+uint8_t mmc_block[MMC_BLOCK_SIZE];
+
+int main (void)
+{
+
+	DDRC = 0xff;
+	DDRA = 0xf0;
+
+  	// Init the SPI 
+	spi_init();
+  	
+  	// Init the MMC 
+  	mmc_init();
+ 
+
+  	// Read the blocks 
+  	int blockNumber = STARTREADEDBLOCK;
+
+	while (blockNumber++ >= 0){
+
+		// Reset the MMC buffer 
+	  	memset(mmc_block, 0x11, MMC_BLOCK_SIZE);
+		// Read block
+		mmc_read_block(blockNumber, mmc_block);
+		// Check block for my data
+		if(check_block(mmc_block, MMC_BLOCK_SIZE))
+			break;
+	}
+
+	PORTA = 0b10010000;
+  	// Infinite loop 
+  	for(;;)
+  		morze_message();
+
+  return(0);
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+//--------------------------------------------------------------
 
 uint8_t mmc_response(uint8_t response)
 {

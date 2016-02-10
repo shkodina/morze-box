@@ -23,38 +23,28 @@
 #include <stdio.h>
 #include <avr/io.h>
 
-/*
 #define DDR_SPI DDRB
 #define DD_MOSI DDB5
 #define DD_MISO DDB6
 #define DD_SCK  DDB7
-*/
 
 void spi_init(void)
 {
-  // Set MOSI and SCK output 
-  //DDR_SPI |= _BV(DD_MOSI) | _BV(DD_SCK);
-  //DDR_SPI &= ~_BV(DD_MISO);
+  /* Set MOSI and SCK output */
+  DDR_SPI |= _BV(DD_MOSI) | _BV(DD_SCK);
+  DDR_SPI &= ~_BV(DD_MISO);
   
-  // Enable SPI, Master, set clock rate fck/128 
-  //SPCR = _BV(SPE) | _BV(MSTR) | _BV(SPR0) | _BV(SPR1);
-  //SPSR = _BV(SPI2X);
+  /* Enable SPI, Master, set clock rate fck/128 */
+  SPCR = _BV(SPE) | _BV(MSTR) | _BV(SPR0) | _BV(SPR1);
+  SPSR = _BV(SPI2X);
 
 
-/*
-// Atmega16
+
+
 PORTB=0x00;
 DDRB=0xB0;
 SPCR=0x50;
 SPSR=0x01;
-*/
-
-//Atmega8
-PORTB=0x00;
-DDRB=0x2C;
-SPCR=0x50;
-SPSR=0x01;
-
 
 }
 
