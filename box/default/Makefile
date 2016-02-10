@@ -1,11 +1,11 @@
 ###############################################################################
-# Makefile for the project main_mod
+# Makefile for the project 04
 ###############################################################################
 
 ## General Flags
-PROJECT = main_mod
+PROJECT = 04
 MCU = atmega16
-TARGET = main_mod.elf
+TARGET = 04.elf
 CC = avr-gcc
 
 CPP = avr-g++
@@ -15,7 +15,7 @@ COMMON = -mmcu=$(MCU)
 
 ## Compile options common for all C compilation units.
 CFLAGS = $(COMMON)
-CFLAGS += -Wall -gdwarf-2 -std=gnu99   -DF_CPU=1000000UL -Os -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums
+CFLAGS += -Wall -gdwarf-2 -std=gnu99 -DF_CPU=1000000UL -Os -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums
 CFLAGS += -MD -MP -MT $(*F).o -MF dep/$(@F).d 
 
 ## Assembly specific flags
@@ -25,7 +25,7 @@ ASMFLAGS += -x assembler-with-cpp -Wa,-gdwarf2
 
 ## Linker flags
 LDFLAGS = $(COMMON)
-LDFLAGS +=  -Wl,-Map=main_mod.map
+LDFLAGS +=  -Wl,-Map=04.map
 
 
 ## Intel Hex file production flags
@@ -37,16 +37,16 @@ HEX_EEPROM_FLAGS += --change-section-lma .eeprom=0 --no-change-warnings
 
 
 ## Objects that must be built in order to link
-OBJECTS = main_mod.o sdmm.o ff.o rf73_spi.o 
+OBJECTS = 04.o sdmm.o ff.o main.o 
 
 ## Objects explicitly added by the user
 LINKONLYOBJECTS = 
 
 ## Build
-all: $(TARGET) main_mod.hex main_mod.eep main_mod.lss size
+all: $(TARGET) 04.hex 04.eep 04.lss size
 
 ## Compile
-main_mod.o: ../main_mod.c
+04.o: ../04.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
 sdmm.o: ../sdmm.c
@@ -55,7 +55,7 @@ sdmm.o: ../sdmm.c
 ff.o: ../ff.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
-rf73_spi.o: ../rf73_spi.c
+main.o: ../main.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
 ##Link
@@ -78,7 +78,7 @@ size: ${TARGET}
 ## Clean target
 .PHONY: clean
 clean:
-	-rm -rf $(OBJECTS) main_mod.elf dep/* main_mod.hex main_mod.eep main_mod.lss main_mod.map
+	-rm -rf $(OBJECTS) 04.elf dep/* 04.hex 04.eep 04.lss 04.map
 
 
 ## Other dependencies
