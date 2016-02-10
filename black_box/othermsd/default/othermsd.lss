@@ -3,781 +3,1436 @@ othermsd.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00000356  00000000  00000000  00000074  2**1
+  0 .text         000005d8  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .bss          00000206  00800060  00800060  000003ca  2**0
+  1 .data         0000007c  00800060  000005d8  0000066c  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000306  008000dc  008000dc  000006e8  2**0
                   ALLOC
-  2 .stab         00000738  00000000  00000000  000003cc  2**2
+  3 .stab         00000738  00000000  00000000  000006e8  2**2
                   CONTENTS, READONLY, DEBUGGING
-  3 .stabstr      000000e7  00000000  00000000  00000b04  2**0
+  4 .stabstr      000000e7  00000000  00000000  00000e20  2**0
                   CONTENTS, READONLY, DEBUGGING
-  4 .debug_aranges 00000040  00000000  00000000  00000beb  2**0
+  5 .debug_aranges 00000040  00000000  00000000  00000f07  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_pubnames 000000f3  00000000  00000000  00000c2b  2**0
+  6 .debug_pubnames 00000157  00000000  00000000  00000f47  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   0000052c  00000000  00000000  00000d1e  2**0
+  7 .debug_info   00000a81  00000000  00000000  0000109e  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000002f1  00000000  00000000  0000124a  2**0
+  8 .debug_abbrev 000003aa  00000000  00000000  00001b1f  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   0000068b  00000000  00000000  0000153b  2**0
+  9 .debug_line   0000097d  00000000  00000000  00001ec9  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000000d0  00000000  00000000  00001bc8  2**2
+ 10 .debug_frame  00000130  00000000  00000000  00002848  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000001db  00000000  00000000  00001c98  2**0
+ 11 .debug_str    00000289  00000000  00000000  00002978  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    000002bd  00000000  00000000  00001e73  2**0
+ 12 .debug_loc    000007ae  00000000  00000000  00002c01  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_pubtypes 00000063  00000000  00000000  00002130  2**0
+ 13 .debug_pubtypes 00000074  00000000  00000000  000033af  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 14 .debug_ranges 00000018  00000000  00000000  00003423  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
 
 00000000 <__vectors>:
-   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
-   4:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-   8:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-   c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  10:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  14:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  18:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  1c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  20:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  24:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  28:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  2c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  30:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  34:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  38:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  3c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  40:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  44:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  48:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  4c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  50:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-
-00000054 <__ctors_end>:
-  54:	11 24       	eor	r1, r1
-  56:	1f be       	out	0x3f, r1	; 63
-  58:	cf e5       	ldi	r28, 0x5F	; 95
-  5a:	d4 e0       	ldi	r29, 0x04	; 4
-  5c:	de bf       	out	0x3e, r29	; 62
-  5e:	cd bf       	out	0x3d, r28	; 61
-
-00000060 <__do_clear_bss>:
-  60:	12 e0       	ldi	r17, 0x02	; 2
-  62:	a0 e6       	ldi	r26, 0x60	; 96
-  64:	b0 e0       	ldi	r27, 0x00	; 0
-  66:	01 c0       	rjmp	.+2      	; 0x6a <.do_clear_bss_start>
-
-00000068 <.do_clear_bss_loop>:
-  68:	1d 92       	st	X+, r1
-
-0000006a <.do_clear_bss_start>:
-  6a:	a6 36       	cpi	r26, 0x66	; 102
-  6c:	b1 07       	cpc	r27, r17
-  6e:	e1 f7       	brne	.-8      	; 0x68 <.do_clear_bss_loop>
-  70:	0e 94 15 01 	call	0x22a	; 0x22a <main>
-  74:	0c 94 a9 01 	jmp	0x352	; 0x352 <_exit>
-
-00000078 <__bad_interrupt>:
-  78:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
-
-0000007c <mmc_response>:
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-
-uint8_t mmc_response(uint8_t response)
-{
-  7c:	1f 93       	push	r17
-  7e:	cf 93       	push	r28
-  80:	df 93       	push	r29
-  82:	18 2f       	mov	r17, r24
-  84:	cf ef       	ldi	r28, 0xFF	; 255
-  86:	df e0       	ldi	r29, 0x0F	; 15
-  uint16_t count = 0xFFF;
-  uint8_t result;
-
-  while(count > 0)
-  {
-    result = spi_receive_byte();
-  88:	0e 94 5f 01 	call	0x2be	; 0x2be <spi_receive_byte>
-    if (result == response)
-  8c:	81 17       	cp	r24, r17
-  8e:	21 f0       	breq	.+8      	; 0x98 <mmc_response+0x1c>
-  90:	21 97       	sbiw	r28, 0x01	; 1
-uint8_t mmc_response(uint8_t response)
-{
-  uint16_t count = 0xFFF;
-  uint8_t result;
-
-  while(count > 0)
-  92:	d1 f7       	brne	.-12     	; 0x88 <mmc_response+0xc>
-    count--;
-  }
-
-  if (count == 0){
-  	//PORTA = 0xf0;
-    return 1; /* Failure, loop was exited due to timeout */
-  94:	81 e0       	ldi	r24, 0x01	; 1
-  96:	01 c0       	rjmp	.+2      	; 0x9a <mmc_response+0x1e>
-  }
-
-  return 0; /* Normal, loop was exited before timeout */
-  98:	80 e0       	ldi	r24, 0x00	; 0
-}
-  9a:	df 91       	pop	r29
-  9c:	cf 91       	pop	r28
-  9e:	1f 91       	pop	r17
-  a0:	08 95       	ret
-
-000000a2 <mmc_init>:
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-
-
-void mmc_init(void)
-{
-  a2:	ff 92       	push	r15
-  a4:	0f 93       	push	r16
-  a6:	1f 93       	push	r17
-  uint8_t i;
-  uint8_t byte;
-
-  /* Init the CS output */
-  DDR_CS |= _BV(DD_CS);
-  a8:	bc 9a       	sbi	0x17, 4	; 23
-
-  SET_CS();
-  aa:	c4 9a       	sbi	0x18, 4	; 24
-  ac:	1a e0       	ldi	r17, 0x0A	; 10
-  {
-    /* Init the card in SPI mode by sending 80 clks */
-    for(i = 0; i < 10; i++)
-      byte = spi_receive_byte();
-  ae:	0e 94 5f 01 	call	0x2be	; 0x2be <spi_receive_byte>
-  b2:	11 50       	subi	r17, 0x01	; 1
-  DDR_CS |= _BV(DD_CS);
-
-  SET_CS();
-  {
-    /* Init the card in SPI mode by sending 80 clks */
-    for(i = 0; i < 10; i++)
-  b4:	e1 f7       	brne	.-8      	; 0xae <mmc_init+0xc>
-      byte = spi_receive_byte();
-  }
-  CLEAR_CS();
-  b6:	c4 98       	cbi	0x18, 4	; 24
-
-
-
-  /* Send CMD0 GO_IDLE_STATE */
-  mmc_cmd[0] = 0x40;
-  b8:	80 e4       	ldi	r24, 0x40	; 64
-  ba:	80 93 60 00 	sts	0x0060, r24
-  mmc_cmd[1] = 0x00;
-  be:	10 92 61 00 	sts	0x0061, r1
-  mmc_cmd[2] = 0x00;
-  c2:	10 92 62 00 	sts	0x0062, r1
-  mmc_cmd[3] = 0x00;
-  c6:	10 92 63 00 	sts	0x0063, r1
-  mmc_cmd[4] = 0x00;
-  ca:	10 92 64 00 	sts	0x0064, r1
-  mmc_cmd[5] = 0x95;
-  ce:	85 e9       	ldi	r24, 0x95	; 149
-  d0:	80 93 65 00 	sts	0x0065, r24
-  spi_send(mmc_cmd, MMC_CMD_SIZE);
-  d4:	80 e6       	ldi	r24, 0x60	; 96
-  d6:	90 e0       	ldi	r25, 0x00	; 0
-  d8:	66 e0       	ldi	r22, 0x06	; 6
-  da:	70 e0       	ldi	r23, 0x00	; 0
-  dc:	0e 94 6a 01 	call	0x2d4	; 0x2d4 <spi_send>
-
-  if (mmc_response(0x01))
-  e0:	81 e0       	ldi	r24, 0x01	; 1
-  e2:	0e 94 3e 00 	call	0x7c	; 0x7c <mmc_response>
-  e6:	88 23       	and	r24, r24
-  e8:	11 f0       	breq	.+4      	; 0xee <mmc_init+0x4c>
-  {
-    PORTC |= 0x10;
-  ea:	ac 9a       	sbi	0x15, 4	; 21
-    return;
-  ec:	4d c0       	rjmp	.+154    	; 0x188 <mmc_init+0xe6>
-  }
-
-PORTC |= 0x02;
-  ee:	a9 9a       	sbi	0x15, 1	; 21
-
-  /* Send some dummy clocks after GO_IDLE_STATE */
-  SET_CS();
-  f0:	c4 9a       	sbi	0x18, 4	; 24
-  spi_receive_byte();
-  f2:	0e 94 5f 01 	call	0x2be	; 0x2be <spi_receive_byte>
-  CLEAR_CS();
-  f6:	c4 98       	cbi	0x18, 4	; 24
-
-PORTC |= 0x04;
-  f8:	aa 9a       	sbi	0x15, 2	; 21
-
-  /* Send CMD1 SEND_OP_COND until response is 0 */
-  i = MMC_TIMEOUT;
-  fa:	1f ef       	ldi	r17, 0xFF	; 255
-  do
-  {
-    mmc_cmd[0] = 0x41;
-  fc:	81 e4       	ldi	r24, 0x41	; 65
-  fe:	f8 2e       	mov	r15, r24
-    mmc_cmd[1] = 0x00;
-    mmc_cmd[2] = 0x00;
-    mmc_cmd[3] = 0x00;
-    mmc_cmd[4] = 0x00;
-    mmc_cmd[5] = 0xFF;
- 100:	0f ef       	ldi	r16, 0xFF	; 255
-
-  /* Send CMD1 SEND_OP_COND until response is 0 */
-  i = MMC_TIMEOUT;
-  do
-  {
-    mmc_cmd[0] = 0x41;
- 102:	f0 92 60 00 	sts	0x0060, r15
-    mmc_cmd[1] = 0x00;
- 106:	10 92 61 00 	sts	0x0061, r1
-    mmc_cmd[2] = 0x00;
- 10a:	10 92 62 00 	sts	0x0062, r1
-    mmc_cmd[3] = 0x00;
- 10e:	10 92 63 00 	sts	0x0063, r1
-    mmc_cmd[4] = 0x00;
- 112:	10 92 64 00 	sts	0x0064, r1
-    mmc_cmd[5] = 0xFF;
- 116:	00 93 65 00 	sts	0x0065, r16
-    spi_send(mmc_cmd, MMC_CMD_SIZE);
- 11a:	80 e6       	ldi	r24, 0x60	; 96
- 11c:	90 e0       	ldi	r25, 0x00	; 0
- 11e:	66 e0       	ldi	r22, 0x06	; 6
- 120:	70 e0       	ldi	r23, 0x00	; 0
- 122:	0e 94 6a 01 	call	0x2d4	; 0x2d4 <spi_send>
-    i--;
- 126:	11 50       	subi	r17, 0x01	; 1
-  } while((mmc_response(0x00) != 0) && (i > 0));
- 128:	80 e0       	ldi	r24, 0x00	; 0
- 12a:	0e 94 3e 00 	call	0x7c	; 0x7c <mmc_response>
- 12e:	88 23       	and	r24, r24
- 130:	19 f0       	breq	.+6      	; 0x138 <mmc_init+0x96>
- 132:	11 23       	and	r17, r17
- 134:	31 f7       	brne	.-52     	; 0x102 <mmc_init+0x60>
- 136:	02 c0       	rjmp	.+4      	; 0x13c <mmc_init+0x9a>
-
-  if (i == 0)
- 138:	11 23       	and	r17, r17
- 13a:	11 f4       	brne	.+4      	; 0x140 <mmc_init+0x9e>
-  {
-    PORTC |= 0x20;
- 13c:	ad 9a       	sbi	0x15, 5	; 21
-    return;
- 13e:	24 c0       	rjmp	.+72     	; 0x188 <mmc_init+0xe6>
-  }
-
-PORTC |= 0x08;
- 140:	ab 9a       	sbi	0x15, 3	; 21
-
-  /* Send some dummy clocks after GO_IDLE_STATE */
-  SET_CS();
- 142:	c4 9a       	sbi	0x18, 4	; 24
-  spi_receive_byte();
- 144:	0e 94 5f 01 	call	0x2be	; 0x2be <spi_receive_byte>
-  CLEAR_CS();
- 148:	c4 98       	cbi	0x18, 4	; 24
-
-  PORTC &= 0b11011111;
- 14a:	ad 98       	cbi	0x15, 5	; 21
-
-  /* Send CMD16 SET_BLOCKLEN to set the block length */
-  mmc_cmd[0] = 0x50;
- 14c:	80 e5       	ldi	r24, 0x50	; 80
- 14e:	80 93 60 00 	sts	0x0060, r24
-  mmc_cmd[1] = 0x00;   /* 4 bytes from here is the block length */
- 152:	10 92 61 00 	sts	0x0061, r1
-                       /* LSB is first */
-                       /* 00 00 00 10 set to 16 bytes */
-                       /* 00 00 02 00 set to 512 bytes */
-  mmc_cmd[2] = 0x00;
- 156:	10 92 62 00 	sts	0x0062, r1
-  /* high block length bits - 512 bytes */
-  mmc_cmd[3] = 0x02;
- 15a:	82 e0       	ldi	r24, 0x02	; 2
- 15c:	80 93 63 00 	sts	0x0063, r24
-  /* low block length bits */
-  mmc_cmd[4] = 0x00;
- 160:	10 92 64 00 	sts	0x0064, r1
-  mmc_cmd[5] = 0xFF; /* checksum is no longer required but we always send 0xFF */
- 164:	00 93 65 00 	sts	0x0065, r16
-  spi_send(mmc_cmd, MMC_CMD_SIZE);
- 168:	80 e6       	ldi	r24, 0x60	; 96
- 16a:	90 e0       	ldi	r25, 0x00	; 0
- 16c:	66 e0       	ldi	r22, 0x06	; 6
- 16e:	70 e0       	ldi	r23, 0x00	; 0
- 170:	0e 94 6a 01 	call	0x2d4	; 0x2d4 <spi_send>
-
-  if ((mmc_response(0x00)) == 1)
- 174:	80 e0       	ldi	r24, 0x00	; 0
- 176:	0e 94 3e 00 	call	0x7c	; 0x7c <mmc_response>
- 17a:	81 30       	cpi	r24, 0x01	; 1
- 17c:	09 f4       	brne	.+2      	; 0x180 <mmc_init+0xde>
-  {
-    PORTC |= 0x40;
- 17e:	ae 9a       	sbi	0x15, 6	; 21
-  }
-
-  SET_CS();
- 180:	c4 9a       	sbi	0x18, 4	; 24
-  spi_receive_byte();
- 182:	0e 94 5f 01 	call	0x2be	; 0x2be <spi_receive_byte>
-
-  PORTA |= 0x20;
- 186:	dd 9a       	sbi	0x1b, 5	; 27
-}
- 188:	1f 91       	pop	r17
- 18a:	0f 91       	pop	r16
- 18c:	ff 90       	pop	r15
- 18e:	08 95       	ret
-
-00000190 <mmc_read_block>:
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-
-void mmc_read_block(uint16_t block_number, uint8_t* block_address)
-{
- 190:	cf 93       	push	r28
- 192:	df 93       	push	r29
- 194:	eb 01       	movw	r28, r22
-  uint16_t checksum;
-  uint16_t varh, varl;
-
-  varl = ((block_number & 0x003F) << 9);
- 196:	9c 01       	movw	r18, r24
- 198:	2f 73       	andi	r18, 0x3F	; 63
- 19a:	30 70       	andi	r19, 0x00	; 0
- 19c:	22 0f       	add	r18, r18
-  varh = ((block_number & 0xFFC0) >> 7);
- 19e:	88 0f       	add	r24, r24
- 1a0:	89 2f       	mov	r24, r25
- 1a2:	88 1f       	adc	r24, r24
- 1a4:	99 0b       	sbc	r25, r25
- 1a6:	91 95       	neg	r25
-
- 
-
-  CLEAR_CS();
- 1a8:	c4 98       	cbi	0x18, 4	; 24
-  {
-    /* send MMC CMD17(READ_SINGLE_BLOCK) to read the data from MMC card */
-    mmc_cmd[0] = 0x51;
- 1aa:	31 e5       	ldi	r19, 0x51	; 81
- 1ac:	30 93 60 00 	sts	0x0060, r19
-    /* high block address bits, varh HIGH and LOW */
-    mmc_cmd[1] = varh >> 0x08;
- 1b0:	90 93 61 00 	sts	0x0061, r25
-    mmc_cmd[2] = varh & 0xFF;
- 1b4:	80 93 62 00 	sts	0x0062, r24
-    /* low block address bits, varl HIGH and LOW */
-    mmc_cmd[3] = varl >> 0x08;
- 1b8:	20 93 63 00 	sts	0x0063, r18
-    mmc_cmd[4] = varl & 0xFF;
- 1bc:	10 92 64 00 	sts	0x0064, r1
-    /* checksum is no longer required but we always send 0xFF */
-    mmc_cmd[5] = 0xFF;
- 1c0:	8f ef       	ldi	r24, 0xFF	; 255
- 1c2:	80 93 65 00 	sts	0x0065, r24
-    spi_send(mmc_cmd, MMC_CMD_SIZE);
- 1c6:	80 e6       	ldi	r24, 0x60	; 96
- 1c8:	90 e0       	ldi	r25, 0x00	; 0
- 1ca:	66 e0       	ldi	r22, 0x06	; 6
- 1cc:	70 e0       	ldi	r23, 0x00	; 0
- 1ce:	0e 94 6a 01 	call	0x2d4	; 0x2d4 <spi_send>
-
-    /* if mmc_response returns 1 then we failed to get a 0x00 response */
-    if ((mmc_response(0x00)) == 1)
- 1d2:	80 e0       	ldi	r24, 0x00	; 0
- 1d4:	0e 94 3e 00 	call	0x7c	; 0x7c <mmc_response>
- 1d8:	81 30       	cpi	r24, 0x01	; 1
- 1da:	89 f0       	breq	.+34     	; 0x1fe <mmc_read_block+0x6e>
-    {
-      return;
-    }
-
-    /* wait for data token */
-    if ((mmc_response(0xFE)) == 1)
- 1dc:	8e ef       	ldi	r24, 0xFE	; 254
- 1de:	0e 94 3e 00 	call	0x7c	; 0x7c <mmc_response>
- 1e2:	81 30       	cpi	r24, 0x01	; 1
- 1e4:	61 f0       	breq	.+24     	; 0x1fe <mmc_read_block+0x6e>
-    }
-
- 
-
-    /* Get the block of data based on the length */
-    spi_receive(block_address, MMC_BLOCK_SIZE);
- 1e6:	ce 01       	movw	r24, r28
- 1e8:	60 e0       	ldi	r22, 0x00	; 0
- 1ea:	72 e0       	ldi	r23, 0x02	; 2
- 1ec:	0e 94 86 01 	call	0x30c	; 0x30c <spi_receive>
-
-    /* CRC bytes that are not needed */
-    checksum = spi_receive_byte();
- 1f0:	0e 94 5f 01 	call	0x2be	; 0x2be <spi_receive_byte>
-    checksum = checksum << 0x08 | spi_receive_byte();
- 1f4:	0e 94 5f 01 	call	0x2be	; 0x2be <spi_receive_byte>
-  }
-  SET_CS();
- 1f8:	c4 9a       	sbi	0x18, 4	; 24
-  
-  spi_receive_byte();
- 1fa:	0e 94 5f 01 	call	0x2be	; 0x2be <spi_receive_byte>
-  
-}
- 1fe:	df 91       	pop	r29
- 200:	cf 91       	pop	r28
- 202:	08 95       	ret
-
-00000204 <print_block>:
-    printf("\n");
-
-  }
-*/
-
-	for(i = 0; i < length ; i++){
- 204:	28 2f       	mov	r18, r24
- 206:	39 2f       	mov	r19, r25
- 208:	f9 01       	movw	r30, r18
- 20a:	80 e0       	ldi	r24, 0x00	; 0
- 20c:	90 e0       	ldi	r25, 0x00	; 0
- 20e:	09 c0       	rjmp	.+18     	; 0x222 <print_block+0x1e>
-		PORTC = block_address[i];
- 210:	21 91       	ld	r18, Z+
- 212:	25 bb       	out	0x15, r18	; 21
-	#else
-		//round up by default
-		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
-	#endif
-
-	__builtin_avr_delay_cycles(__ticks_dc);
- 214:	a7 e8       	ldi	r26, 0x87	; 135
- 216:	b3 e1       	ldi	r27, 0x13	; 19
- 218:	11 97       	sbiw	r26, 0x01	; 1
- 21a:	f1 f7       	brne	.-4      	; 0x218 <print_block+0x14>
- 21c:	00 c0       	rjmp	.+0      	; 0x21e <print_block+0x1a>
- 21e:	00 00       	nop
-    printf("\n");
-
-  }
-*/
-
-	for(i = 0; i < length ; i++){
- 220:	01 96       	adiw	r24, 0x01	; 1
- 222:	86 17       	cp	r24, r22
- 224:	97 07       	cpc	r25, r23
- 226:	a0 f3       	brcs	.-24     	; 0x210 <print_block+0xc>
-		PORTC = block_address[i];
-		_delay_ms(20);
-	}
-}
- 228:	08 95       	ret
-
-0000022a <main>:
-* Main program
-******************************************************************************/
-uint8_t mmc_block[MMC_BLOCK_SIZE];
-
-int main (void)
-{
- 22a:	cf 93       	push	r28
- 22c:	df 93       	push	r29
-
-	DDRC = 0xff;
- 22e:	8f ef       	ldi	r24, 0xFF	; 255
- 230:	84 bb       	out	0x14, r24	; 20
-	DDRA = 0xf0;
- 232:	80 ef       	ldi	r24, 0xF0	; 240
- 234:	8a bb       	out	0x1a, r24	; 26
-
-
-
-  /* Init the SPI */
-
-  spi_init();
- 236:	0e 94 4c 01 	call	0x298	; 0x298 <spi_init>
-  	PORTC |= 0x01;
- 23a:	a8 9a       	sbi	0x15, 0	; 21
-
-  /* Init the MMC */
-
-  mmc_init();
- 23c:	0e 94 51 00 	call	0xa2	; 0xa2 <mmc_init>
- 
-PORTA |= 0xF0;
- 240:	8b b3       	in	r24, 0x1b	; 27
- 242:	80 6f       	ori	r24, 0xF0	; 240
- 244:	8b bb       	out	0x1b, r24	; 27
-
-  // Reset the MMC buffer 
-  memset(mmc_block, 0xCA, MMC_BLOCK_SIZE);
- 246:	86 e6       	ldi	r24, 0x66	; 102
- 248:	90 e0       	ldi	r25, 0x00	; 0
- 24a:	6a ec       	ldi	r22, 0xCA	; 202
- 24c:	70 e0       	ldi	r23, 0x00	; 0
- 24e:	40 e0       	ldi	r20, 0x00	; 0
- 250:	52 e0       	ldi	r21, 0x02	; 2
- 252:	0e 94 a2 01 	call	0x344	; 0x344 <memset>
- 256:	8f e3       	ldi	r24, 0x3F	; 63
- 258:	9d e0       	ldi	r25, 0x0D	; 13
- 25a:	a3 e0       	ldi	r26, 0x03	; 3
- 25c:	81 50       	subi	r24, 0x01	; 1
- 25e:	90 40       	sbci	r25, 0x00	; 0
- 260:	a0 40       	sbci	r26, 0x00	; 0
- 262:	e1 f7       	brne	.-8      	; 0x25c <main+0x32>
- 264:	00 c0       	rjmp	.+0      	; 0x266 <main+0x3c>
- 266:	00 00       	nop
-
-_delay_ms(1000);
-PORTC = 0;
- 268:	15 ba       	out	0x15, r1	; 21
-
-  // Read the first block 
-  for(int t=63; t<90; t++){
- 26a:	cf e3       	ldi	r28, 0x3F	; 63
- 26c:	d0 e0       	ldi	r29, 0x00	; 0
-//  mmc_read_block(63, mmc_block);
-  mmc_read_block(t, mmc_block);
- 26e:	ce 01       	movw	r24, r28
- 270:	66 e6       	ldi	r22, 0x66	; 102
- 272:	70 e0       	ldi	r23, 0x00	; 0
- 274:	0e 94 c8 00 	call	0x190	; 0x190 <mmc_read_block>
-  print_block(mmc_block, MMC_BLOCK_SIZE);
- 278:	86 e6       	ldi	r24, 0x66	; 102
- 27a:	90 e0       	ldi	r25, 0x00	; 0
- 27c:	60 e0       	ldi	r22, 0x00	; 0
- 27e:	72 e0       	ldi	r23, 0x02	; 2
- 280:	0e 94 02 01 	call	0x204	; 0x204 <print_block>
-
-_delay_ms(1000);
-PORTC = 0;
-
-  // Read the first block 
-  for(int t=63; t<90; t++){
- 284:	21 96       	adiw	r28, 0x01	; 1
- 286:	ca 35       	cpi	r28, 0x5A	; 90
- 288:	d1 05       	cpc	r29, r1
- 28a:	89 f7       	brne	.-30     	; 0x26e <main+0x44>
-//  mmc_read_block(63, mmc_block);
-  mmc_read_block(t, mmc_block);
-  print_block(mmc_block, MMC_BLOCK_SIZE);
-  }
-
-PORTA &= 0x0f;
- 28c:	8b b3       	in	r24, 0x1b	; 27
- 28e:	8f 70       	andi	r24, 0x0F	; 15
- 290:	8b bb       	out	0x1b, r24	; 27
-PORTA = 0b10010000;
- 292:	80 e9       	ldi	r24, 0x90	; 144
- 294:	8b bb       	out	0x1b, r24	; 27
- 296:	ff cf       	rjmp	.-2      	; 0x296 <main+0x6c>
-
-00000298 <spi_init>:
-#define DD_SCK  DDB7
-
-void spi_init(void)
-{
-  /* Set MOSI and SCK output */
-  DDR_SPI |= _BV(DD_MOSI) | _BV(DD_SCK);
- 298:	87 b3       	in	r24, 0x17	; 23
- 29a:	80 6a       	ori	r24, 0xA0	; 160
- 29c:	87 bb       	out	0x17, r24	; 23
-  DDR_SPI &= ~_BV(DD_MISO);
- 29e:	be 98       	cbi	0x17, 6	; 23
-  
-  /* Enable SPI, Master, set clock rate fck/128 */
-  SPCR = _BV(SPE) | _BV(MSTR) | _BV(SPR0) | _BV(SPR1);
- 2a0:	83 e5       	ldi	r24, 0x53	; 83
- 2a2:	8d b9       	out	0x0d, r24	; 13
-  SPSR = _BV(SPI2X);
- 2a4:	81 e0       	ldi	r24, 0x01	; 1
- 2a6:	8e b9       	out	0x0e, r24	; 14
-
-
-
-
-PORTB=0x00;
- 2a8:	18 ba       	out	0x18, r1	; 24
-DDRB=0xB0;
- 2aa:	90 eb       	ldi	r25, 0xB0	; 176
- 2ac:	97 bb       	out	0x17, r25	; 23
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	2c c0       	rjmp	.+88     	; 0x5c <__bad_interrupt>
+   4:	2b c0       	rjmp	.+86     	; 0x5c <__bad_interrupt>
+   6:	2a c0       	rjmp	.+84     	; 0x5c <__bad_interrupt>
+   8:	29 c0       	rjmp	.+82     	; 0x5c <__bad_interrupt>
+   a:	28 c0       	rjmp	.+80     	; 0x5c <__bad_interrupt>
+   c:	27 c0       	rjmp	.+78     	; 0x5c <__bad_interrupt>
+   e:	26 c0       	rjmp	.+76     	; 0x5c <__bad_interrupt>
+  10:	25 c0       	rjmp	.+74     	; 0x5c <__bad_interrupt>
+  12:	24 c0       	rjmp	.+72     	; 0x5c <__bad_interrupt>
+  14:	23 c0       	rjmp	.+70     	; 0x5c <__bad_interrupt>
+  16:	22 c0       	rjmp	.+68     	; 0x5c <__bad_interrupt>
+  18:	21 c0       	rjmp	.+66     	; 0x5c <__bad_interrupt>
+  1a:	20 c0       	rjmp	.+64     	; 0x5c <__bad_interrupt>
+  1c:	1f c0       	rjmp	.+62     	; 0x5c <__bad_interrupt>
+  1e:	1e c0       	rjmp	.+60     	; 0x5c <__bad_interrupt>
+  20:	1d c0       	rjmp	.+58     	; 0x5c <__bad_interrupt>
+  22:	1c c0       	rjmp	.+56     	; 0x5c <__bad_interrupt>
+  24:	1b c0       	rjmp	.+54     	; 0x5c <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+
+00000032 <__do_copy_data>:
+  32:	10 e0       	ldi	r17, 0x00	; 0
+  34:	a0 e6       	ldi	r26, 0x60	; 96
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	e8 ed       	ldi	r30, 0xD8	; 216
+  3a:	f5 e0       	ldi	r31, 0x05	; 5
+  3c:	02 c0       	rjmp	.+4      	; 0x42 <__SREG__+0x3>
+  3e:	05 90       	lpm	r0, Z+
+  40:	0d 92       	st	X+, r0
+  42:	ac 3d       	cpi	r26, 0xDC	; 220
+  44:	b1 07       	cpc	r27, r17
+  46:	d9 f7       	brne	.-10     	; 0x3e <__SP_H__>
+
+00000048 <__do_clear_bss>:
+  48:	13 e0       	ldi	r17, 0x03	; 3
+  4a:	ac ed       	ldi	r26, 0xDC	; 220
+  4c:	b0 e0       	ldi	r27, 0x00	; 0
+  4e:	01 c0       	rjmp	.+2      	; 0x52 <.do_clear_bss_start>
+
+00000050 <.do_clear_bss_loop>:
+  50:	1d 92       	st	X+, r1
+
+00000052 <.do_clear_bss_start>:
+  52:	a2 3e       	cpi	r26, 0xE2	; 226
+  54:	b1 07       	cpc	r27, r17
+  56:	e1 f7       	brne	.-8      	; 0x50 <.do_clear_bss_loop>
+  58:	90 d2       	rcall	.+1312   	; 0x57a <main>
+  5a:	bc c2       	rjmp	.+1400   	; 0x5d4 <_exit>
+
+0000005c <__bad_interrupt>:
+  5c:	d1 cf       	rjmp	.-94     	; 0x0 <__vectors>
+
+0000005e <spi_init>:
 SPCR=0x50;
- 2ae:	90 e5       	ldi	r25, 0x50	; 80
- 2b0:	9d b9       	out	0x0d, r25	; 13
 SPSR=0x01;
- 2b2:	8e b9       	out	0x0e, r24	; 14
+*/
+
+//Atmega8
+PORTB=0x00;
+  5e:	18 ba       	out	0x18, r1	; 24
+DDRB=0x2C;
+  60:	8c e2       	ldi	r24, 0x2C	; 44
+  62:	87 bb       	out	0x17, r24	; 23
+SPCR=0x50;
+  64:	80 e5       	ldi	r24, 0x50	; 80
+  66:	8d b9       	out	0x0d, r24	; 13
+SPSR=0x01;
+  68:	81 e0       	ldi	r24, 0x01	; 1
+  6a:	8e b9       	out	0x0e, r24	; 14
+
 
 }
- 2b4:	08 95       	ret
+  6c:	08 95       	ret
 
-000002b6 <spi_send_byte>:
+0000006e <spi_send_byte>:
 
 void spi_send_byte(uint8_t byte)
 {
   /* Start transmission */
   SPDR = byte;
- 2b6:	8f b9       	out	0x0f, r24	; 15
+  6e:	8f b9       	out	0x0f, r24	; 15
   
   /* Wait for transmission complete */
   while (!(SPSR & _BV(SPIF)));
- 2b8:	77 9b       	sbis	0x0e, 7	; 14
- 2ba:	fe cf       	rjmp	.-4      	; 0x2b8 <spi_send_byte+0x2>
+  70:	77 9b       	sbis	0x0e, 7	; 14
+  72:	fe cf       	rjmp	.-4      	; 0x70 <spi_send_byte+0x2>
 }
- 2bc:	08 95       	ret
+  74:	08 95       	ret
 
-000002be <spi_receive_byte>:
+00000076 <spi_receive_byte>:
 uint8_t spi_receive_byte(void)
 {
   uint8_t byte = 0;
   
   /* Write dummy byte to generate clock */
   SPDR = 0xFF;
- 2be:	8f ef       	ldi	r24, 0xFF	; 255
- 2c0:	8f b9       	out	0x0f, r24	; 15
+  76:	8f ef       	ldi	r24, 0xFF	; 255
+  78:	8f b9       	out	0x0f, r24	; 15
   
   /* Wait for transmission complete */
   while (!(SPSR & _BV(SPIF)));
- 2c2:	77 9b       	sbis	0x0e, 7	; 14
- 2c4:	fe cf       	rjmp	.-4      	; 0x2c2 <spi_receive_byte+0x4>
+  7a:	77 9b       	sbis	0x0e, 7	; 14
+  7c:	fe cf       	rjmp	.-4      	; 0x7a <spi_receive_byte+0x4>
   
   /* Read the received byte */
   byte = SPDR;
- 2c6:	8f b1       	in	r24, 0x0f	; 15
+  7e:	8f b1       	in	r24, 0x0f	; 15
   
   return byte;
 }
- 2c8:	08 95       	ret
+  80:	08 95       	ret
 
-000002ca <spi_send_receive_byte>:
+00000082 <spi_send_receive_byte>:
 
 uint8_t spi_send_receive_byte(uint8_t byte)
 {
   /* Start transmission */
   SPDR = byte;
- 2ca:	8f b9       	out	0x0f, r24	; 15
+  82:	8f b9       	out	0x0f, r24	; 15
   
   /* Wait for transmission complete */
   while (!(SPSR & _BV(SPIF)));
- 2cc:	77 9b       	sbis	0x0e, 7	; 14
- 2ce:	fe cf       	rjmp	.-4      	; 0x2cc <spi_send_receive_byte+0x2>
+  84:	77 9b       	sbis	0x0e, 7	; 14
+  86:	fe cf       	rjmp	.-4      	; 0x84 <spi_send_receive_byte+0x2>
   
   /* Read the received byte */
   byte = SPDR;
- 2d0:	8f b1       	in	r24, 0x0f	; 15
+  88:	8f b1       	in	r24, 0x0f	; 15
   
   return byte;
 }
- 2d2:	08 95       	ret
+  8a:	08 95       	ret
 
-000002d4 <spi_send>:
+0000008c <spi_send>:
 
 void spi_send(uint8_t* data, uint16_t length)
 {
- 2d4:	ef 92       	push	r14
- 2d6:	ff 92       	push	r15
- 2d8:	0f 93       	push	r16
- 2da:	1f 93       	push	r17
- 2dc:	cf 93       	push	r28
- 2de:	df 93       	push	r29
- 2e0:	7b 01       	movw	r14, r22
+  8c:	ef 92       	push	r14
+  8e:	ff 92       	push	r15
+  90:	0f 93       	push	r16
+  92:	1f 93       	push	r17
+  94:	cf 93       	push	r28
+  96:	df 93       	push	r29
+  98:	7b 01       	movw	r14, r22
   for(uint16_t i = 0; i < length; i++)
- 2e2:	08 2f       	mov	r16, r24
- 2e4:	19 2f       	mov	r17, r25
- 2e6:	c0 e0       	ldi	r28, 0x00	; 0
- 2e8:	d0 e0       	ldi	r29, 0x00	; 0
- 2ea:	06 c0       	rjmp	.+12     	; 0x2f8 <spi_send+0x24>
+  9a:	08 2f       	mov	r16, r24
+  9c:	19 2f       	mov	r17, r25
+  9e:	c0 e0       	ldi	r28, 0x00	; 0
+  a0:	d0 e0       	ldi	r29, 0x00	; 0
+  a2:	05 c0       	rjmp	.+10     	; 0xae <spi_send+0x22>
     spi_send_byte(data[i]);
- 2ec:	f8 01       	movw	r30, r16
- 2ee:	81 91       	ld	r24, Z+
- 2f0:	8f 01       	movw	r16, r30
- 2f2:	0e 94 5b 01 	call	0x2b6	; 0x2b6 <spi_send_byte>
+  a4:	f8 01       	movw	r30, r16
+  a6:	81 91       	ld	r24, Z+
+  a8:	8f 01       	movw	r16, r30
+  aa:	e1 df       	rcall	.-62     	; 0x6e <spi_send_byte>
   return byte;
 }
 
 void spi_send(uint8_t* data, uint16_t length)
 {
   for(uint16_t i = 0; i < length; i++)
- 2f6:	21 96       	adiw	r28, 0x01	; 1
- 2f8:	ce 15       	cp	r28, r14
- 2fa:	df 05       	cpc	r29, r15
- 2fc:	b8 f3       	brcs	.-18     	; 0x2ec <spi_send+0x18>
+  ac:	21 96       	adiw	r28, 0x01	; 1
+  ae:	ce 15       	cp	r28, r14
+  b0:	df 05       	cpc	r29, r15
+  b2:	c0 f3       	brcs	.-16     	; 0xa4 <spi_send+0x18>
     spi_send_byte(data[i]);
 }
- 2fe:	df 91       	pop	r29
- 300:	cf 91       	pop	r28
- 302:	1f 91       	pop	r17
- 304:	0f 91       	pop	r16
- 306:	ff 90       	pop	r15
- 308:	ef 90       	pop	r14
- 30a:	08 95       	ret
+  b4:	df 91       	pop	r29
+  b6:	cf 91       	pop	r28
+  b8:	1f 91       	pop	r17
+  ba:	0f 91       	pop	r16
+  bc:	ff 90       	pop	r15
+  be:	ef 90       	pop	r14
+  c0:	08 95       	ret
 
-0000030c <spi_receive>:
+000000c2 <spi_receive>:
 
 void spi_receive(uint8_t* data, uint16_t length)
 {
- 30c:	ef 92       	push	r14
- 30e:	ff 92       	push	r15
- 310:	0f 93       	push	r16
- 312:	1f 93       	push	r17
- 314:	cf 93       	push	r28
- 316:	df 93       	push	r29
- 318:	7b 01       	movw	r14, r22
+  c2:	ef 92       	push	r14
+  c4:	ff 92       	push	r15
+  c6:	0f 93       	push	r16
+  c8:	1f 93       	push	r17
+  ca:	cf 93       	push	r28
+  cc:	df 93       	push	r29
+  ce:	7b 01       	movw	r14, r22
   for(uint16_t i = 0; i < length; i++)
- 31a:	08 2f       	mov	r16, r24
- 31c:	19 2f       	mov	r17, r25
- 31e:	c0 e0       	ldi	r28, 0x00	; 0
- 320:	d0 e0       	ldi	r29, 0x00	; 0
- 322:	06 c0       	rjmp	.+12     	; 0x330 <spi_receive+0x24>
+  d0:	08 2f       	mov	r16, r24
+  d2:	19 2f       	mov	r17, r25
+  d4:	c0 e0       	ldi	r28, 0x00	; 0
+  d6:	d0 e0       	ldi	r29, 0x00	; 0
+  d8:	05 c0       	rjmp	.+10     	; 0xe4 <spi_receive+0x22>
   {
     data[i] = spi_receive_byte();
- 324:	0e 94 5f 01 	call	0x2be	; 0x2be <spi_receive_byte>
- 328:	f8 01       	movw	r30, r16
- 32a:	81 93       	st	Z+, r24
- 32c:	8f 01       	movw	r16, r30
+  da:	cd df       	rcall	.-102    	; 0x76 <spi_receive_byte>
+  dc:	f8 01       	movw	r30, r16
+  de:	81 93       	st	Z+, r24
+  e0:	8f 01       	movw	r16, r30
     spi_send_byte(data[i]);
 }
 
 void spi_receive(uint8_t* data, uint16_t length)
 {
   for(uint16_t i = 0; i < length; i++)
- 32e:	21 96       	adiw	r28, 0x01	; 1
- 330:	ce 15       	cp	r28, r14
- 332:	df 05       	cpc	r29, r15
- 334:	b8 f3       	brcs	.-18     	; 0x324 <spi_receive+0x18>
+  e2:	21 96       	adiw	r28, 0x01	; 1
+  e4:	ce 15       	cp	r28, r14
+  e6:	df 05       	cpc	r29, r15
+  e8:	c0 f3       	brcs	.-16     	; 0xda <spi_receive+0x18>
   {
     data[i] = spi_receive_byte();
   }
 }
- 336:	df 91       	pop	r29
- 338:	cf 91       	pop	r28
- 33a:	1f 91       	pop	r17
- 33c:	0f 91       	pop	r16
- 33e:	ff 90       	pop	r15
- 340:	ef 90       	pop	r14
- 342:	08 95       	ret
+  ea:	df 91       	pop	r29
+  ec:	cf 91       	pop	r28
+  ee:	1f 91       	pop	r17
+  f0:	0f 91       	pop	r16
+  f2:	ff 90       	pop	r15
+  f4:	ef 90       	pop	r14
+  f6:	08 95       	ret
 
-00000344 <memset>:
- 344:	dc 01       	movw	r26, r24
- 346:	01 c0       	rjmp	.+2      	; 0x34a <memset+0x6>
- 348:	6d 93       	st	X+, r22
- 34a:	41 50       	subi	r20, 0x01	; 1
- 34c:	50 40       	sbci	r21, 0x00	; 0
- 34e:	e0 f7       	brcc	.-8      	; 0x348 <memset+0x4>
- 350:	08 95       	ret
+000000f8 <morze_pause>:
+//--------------------------------------------------------------
+//--------------------------------------------------------------
 
-00000352 <_exit>:
- 352:	f8 94       	cli
+static inline void morze_pause(char countMorzePauseInMs)
+{
+	for(char i = 0; i < countMorzePauseInMs; i++)
+  f8:	90 e0       	ldi	r25, 0x00	; 0
+  fa:	07 c0       	rjmp	.+14     	; 0x10a <morze_pause+0x12>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
 
-00000354 <__stop_program>:
- 354:	ff cf       	rjmp	.-2      	; 0x354 <__stop_program>
+	__builtin_avr_delay_cycles(__ticks_dc);
+  fc:	eb e4       	ldi	r30, 0x4B	; 75
+  fe:	fd e1       	ldi	r31, 0x1D	; 29
+ 100:	31 97       	sbiw	r30, 0x01	; 1
+ 102:	f1 f7       	brne	.-4      	; 0x100 <morze_pause+0x8>
+ 104:	00 c0       	rjmp	.+0      	; 0x106 <morze_pause+0xe>
+ 106:	00 00       	nop
+ 108:	9f 5f       	subi	r25, 0xFF	; 255
+ 10a:	98 17       	cp	r25, r24
+ 10c:	b8 f3       	brcs	.-18     	; 0xfc <morze_pause+0x4>
+		//_delay_ms(MAINPUSETIME);
+		_delay_ms(MAINPUSETIME);
+		//INVBIT(PORTA,6);
+		
+	}
+}
+ 10e:	08 95       	ret
+
+00000110 <init_abc>:
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+
+char init_abc(uint8_t *block_address, uint16_t length)
+{
+ 110:	dc 01       	movw	r26, r24
+	PointTime = block_address[0] - 49 + 1; // atoi "char-49=digit"
+ 112:	8c 91       	ld	r24, X
+ 114:	80 53       	subi	r24, 0x30	; 48
+ 116:	80 93 60 00 	sts	0x0060, r24
+
+	for (char l = 0; l < PointTime; l++){
+ 11a:	80 e0       	ldi	r24, 0x00	; 0
+ 11c:	0f c0       	rjmp	.+30     	; 0x13c <init_abc+0x2c>
+		UPBIT(LEDPORT, LEDPIN);
+ 11e:	a9 9a       	sbi	0x15, 1	; 21
+ 120:	e3 e2       	ldi	r30, 0x23	; 35
+ 122:	f4 ef       	ldi	r31, 0xF4	; 244
+ 124:	31 97       	sbiw	r30, 0x01	; 1
+ 126:	f1 f7       	brne	.-4      	; 0x124 <init_abc+0x14>
+ 128:	00 c0       	rjmp	.+0      	; 0x12a <init_abc+0x1a>
+ 12a:	00 00       	nop
+		_delay_ms(250);
+		DOWNBIT(LEDPORT, LEDPIN);
+ 12c:	a9 98       	cbi	0x15, 1	; 21
+ 12e:	e3 e2       	ldi	r30, 0x23	; 35
+ 130:	f4 ef       	ldi	r31, 0xF4	; 244
+ 132:	31 97       	sbiw	r30, 0x01	; 1
+ 134:	f1 f7       	brne	.-4      	; 0x132 <init_abc+0x22>
+ 136:	00 c0       	rjmp	.+0      	; 0x138 <init_abc+0x28>
+ 138:	00 00       	nop
+
+char init_abc(uint8_t *block_address, uint16_t length)
+{
+	PointTime = block_address[0] - 49 + 1; // atoi "char-49=digit"
+
+	for (char l = 0; l < PointTime; l++){
+ 13a:	8f 5f       	subi	r24, 0xFF	; 255
+ 13c:	90 91 60 00 	lds	r25, 0x0060
+ 140:	89 17       	cp	r24, r25
+ 142:	68 f3       	brcs	.-38     	; 0x11e <init_abc+0xe>
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+
+char init_abc(uint8_t *block_address, uint16_t length)
+ 144:	11 96       	adiw	r26, 0x01	; 1
+{
+	PointTime = block_address[0] - 49 + 1; // atoi "char-49=digit"
+
+	for (char l = 0; l < PointTime; l++){
+ 146:	e1 e6       	ldi	r30, 0x61	; 97
+ 148:	f0 e0       	ldi	r31, 0x00	; 0
+		_delay_ms(250);
+	
+	}	
+
+	for (int i = 1; i <= TOTALLEN; i++){
+		abc[i-1].code = block_address[i];
+ 14a:	8d 91       	ld	r24, X+
+ 14c:	80 83       	st	Z, r24
+ 14e:	33 96       	adiw	r30, 0x03	; 3
+		DOWNBIT(LEDPORT, LEDPIN);
+		_delay_ms(250);
+	
+	}	
+
+	for (int i = 1; i <= TOTALLEN; i++){
+ 150:	80 e0       	ldi	r24, 0x00	; 0
+ 152:	ef 3d       	cpi	r30, 0xDF	; 223
+ 154:	f8 07       	cpc	r31, r24
+ 156:	c9 f7       	brne	.-14     	; 0x14a <init_abc+0x3a>
+		abc[i-1].code = block_address[i];
+	}
+}
+ 158:	08 95       	ret
+
+0000015a <init_message>:
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+
+char init_message(uint8_t *block_address, uint16_t length)
+{
+	memset(message,0x00,MESSLEN);
+ 15a:	ec ed       	ldi	r30, 0xDC	; 220
+ 15c:	f0 e0       	ldi	r31, 0x00	; 0
+ 15e:	20 e0       	ldi	r18, 0x00	; 0
+ 160:	31 e0       	ldi	r19, 0x01	; 1
+ 162:	df 01       	movw	r26, r30
+ 164:	a9 01       	movw	r20, r18
+ 166:	1d 92       	st	X+, r1
+ 168:	41 50       	subi	r20, 0x01	; 1
+ 16a:	50 40       	sbci	r21, 0x00	; 0
+ 16c:	e1 f7       	brne	.-8      	; 0x166 <init_message+0xc>
+ 16e:	31 96       	adiw	r30, 0x01	; 1
+ 170:	a8 2f       	mov	r26, r24
+ 172:	b9 2f       	mov	r27, r25
+	for (int i = 0; i < length; i++){
+ 174:	80 e0       	ldi	r24, 0x00	; 0
+ 176:	90 e0       	ldi	r25, 0x00	; 0
+ 178:	23 c0       	rjmp	.+70     	; 0x1c0 <init_message+0x66>
+					if (block_address[i] == 'e' && 
+ 17a:	2d 91       	ld	r18, X+
+ 17c:	25 36       	cpi	r18, 0x65	; 101
+ 17e:	f1 f4       	brne	.+60     	; 0x1bc <init_message+0x62>
+ 180:	3c 91       	ld	r19, X
+ 182:	3f 36       	cpi	r19, 0x6F	; 111
+ 184:	d9 f4       	brne	.+54     	; 0x1bc <init_message+0x62>
+						block_address[i+1] == 'o' && 
+ 186:	11 96       	adiw	r26, 0x01	; 1
+ 188:	3c 91       	ld	r19, X
+ 18a:	11 97       	sbiw	r26, 0x01	; 1
+ 18c:	36 36       	cpi	r19, 0x66	; 102
+ 18e:	b1 f4       	brne	.+44     	; 0x1bc <init_message+0x62>
+						block_address[i+2] == 'f' &&
+ 190:	12 96       	adiw	r26, 0x02	; 2
+ 192:	3c 91       	ld	r19, X
+ 194:	12 97       	sbiw	r26, 0x02	; 2
+ 196:	36 36       	cpi	r19, 0x66	; 102
+ 198:	89 f4       	brne	.+34     	; 0x1bc <init_message+0x62>
+						block_address[i+3] == 'f')
+					{
+						message[0]=i;
+ 19a:	80 93 dc 00 	sts	0x00DC, r24
+						
+						UPBIT(LEDPORT, LEDPIN);
+ 19e:	a9 9a       	sbi	0x15, 1	; 21
+ 1a0:	83 e2       	ldi	r24, 0x23	; 35
+ 1a2:	94 ef       	ldi	r25, 0xF4	; 244
+ 1a4:	01 97       	sbiw	r24, 0x01	; 1
+ 1a6:	f1 f7       	brne	.-4      	; 0x1a4 <init_message+0x4a>
+ 1a8:	00 c0       	rjmp	.+0      	; 0x1aa <init_message+0x50>
+ 1aa:	00 00       	nop
+						_delay_ms(250);
+						DOWNBIT(LEDPORT, LEDPIN);
+ 1ac:	a9 98       	cbi	0x15, 1	; 21
+ 1ae:	a3 e2       	ldi	r26, 0x23	; 35
+ 1b0:	b4 ef       	ldi	r27, 0xF4	; 244
+ 1b2:	11 97       	sbiw	r26, 0x01	; 1
+ 1b4:	f1 f7       	brne	.-4      	; 0x1b2 <init_message+0x58>
+ 1b6:	00 c0       	rjmp	.+0      	; 0x1b8 <init_message+0x5e>
+ 1b8:	00 00       	nop
+						PORTA = 0b01000000;
+						_delay_ms(300);
+						PORTA = 0b10000000;
+						_delay_ms(300);
+						}
+*/						return 1;
+ 1ba:	05 c0       	rjmp	.+10     	; 0x1c6 <init_message+0x6c>
+					}
+		//PORTC = block_address[i];
+		//_delay_ms(450);
+		message[i+1] = block_address[i];
+ 1bc:	01 96       	adiw	r24, 0x01	; 1
+ 1be:	21 93       	st	Z+, r18
+//--------------------------------------------------------------
+
+char init_message(uint8_t *block_address, uint16_t length)
+{
+	memset(message,0x00,MESSLEN);
+	for (int i = 0; i < length; i++){
+ 1c0:	86 17       	cp	r24, r22
+ 1c2:	97 07       	cpc	r25, r23
+ 1c4:	d0 f2       	brcs	.-76     	; 0x17a <init_message+0x20>
+		//PORTC = block_address[i];
+		//_delay_ms(450);
+		message[i+1] = block_address[i];
+	}
+	return 1;
+}
+ 1c6:	81 e0       	ldi	r24, 0x01	; 1
+ 1c8:	08 95       	ret
+
+000001ca <check_block>:
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+
+char check_block(uint8_t *block_address, uint16_t length)
+{
+ 1ca:	5f 92       	push	r5
+ 1cc:	6f 92       	push	r6
+ 1ce:	7f 92       	push	r7
+ 1d0:	8f 92       	push	r8
+ 1d2:	9f 92       	push	r9
+ 1d4:	af 92       	push	r10
+ 1d6:	bf 92       	push	r11
+ 1d8:	cf 92       	push	r12
+ 1da:	df 92       	push	r13
+ 1dc:	ef 92       	push	r14
+ 1de:	ff 92       	push	r15
+ 1e0:	0f 93       	push	r16
+ 1e2:	1f 93       	push	r17
+ 1e4:	cf 93       	push	r28
+ 1e6:	df 93       	push	r29
+ 1e8:	5c 01       	movw	r10, r24
+ 1ea:	6b 01       	movw	r12, r22
+			}
+			//_delay_ms(20);
+		}
+		INVBIT(LEDPORT, LEDPIN);
+	}
+	return 0;
+ 1ec:	ec 01       	movw	r28, r24
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+
+char check_block(uint8_t *block_address, uint16_t length)
+ 1ee:	34 e0       	ldi	r19, 0x04	; 4
+ 1f0:	e3 2e       	mov	r14, r19
+ 1f2:	f1 2c       	mov	r15, r1
+ 1f4:	e8 0e       	add	r14, r24
+ 1f6:	f9 1e       	adc	r15, r25
+{
+ 	for(int i = 0; i < length - 3 ; i++){
+ 1f8:	04 e0       	ldi	r16, 0x04	; 4
+ 1fa:	10 e0       	ldi	r17, 0x00	; 0
+ 1fc:	2d ef       	ldi	r18, 0xFD	; 253
+ 1fe:	82 2e       	mov	r8, r18
+ 200:	2f ef       	ldi	r18, 0xFF	; 255
+ 202:	92 2e       	mov	r9, r18
+ 204:	86 0e       	add	r8, r22
+ 206:	97 1e       	adc	r9, r23
+					PORTA = 0b01100000;
+					_delay_ms(300);
+				}
+*/				//_delay_ms(1000);
+				
+				init_abc(block_address + i + 4, length - i - 4); // munus bytes "text"
+ 208:	9c ef       	ldi	r25, 0xFC	; 252
+ 20a:	69 2e       	mov	r6, r25
+ 20c:	9f ef       	ldi	r25, 0xFF	; 255
+ 20e:	79 2e       	mov	r7, r25
+ 210:	66 0e       	add	r6, r22
+ 212:	77 1e       	adc	r7, r23
+				
+
+			}
+			//_delay_ms(20);
+		}
+		INVBIT(LEDPORT, LEDPIN);
+ 214:	82 e0       	ldi	r24, 0x02	; 2
+ 216:	58 2e       	mov	r5, r24
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+
+char check_block(uint8_t *block_address, uint16_t length)
+{
+ 	for(int i = 0; i < length - 3 ; i++){
+ 218:	5a c0       	rjmp	.+180    	; 0x2ce <check_block+0x104>
+		if(block_address[i]){
+ 21a:	89 91       	ld	r24, Y+
+ 21c:	88 23       	and	r24, r24
+ 21e:	09 f4       	brne	.+2      	; 0x222 <check_block+0x58>
+ 220:	4e c0       	rjmp	.+156    	; 0x2be <check_block+0xf4>
+			
+			// DATA Part started
+			if (block_address[i] == 't' && 
+ 222:	84 37       	cpi	r24, 0x74	; 116
+ 224:	09 f0       	breq	.+2      	; 0x228 <check_block+0x5e>
+ 226:	4b c0       	rjmp	.+150    	; 0x2be <check_block+0xf4>
+ 228:	88 81       	ld	r24, Y
+ 22a:	85 36       	cpi	r24, 0x65	; 101
+ 22c:	09 f0       	breq	.+2      	; 0x230 <check_block+0x66>
+ 22e:	47 c0       	rjmp	.+142    	; 0x2be <check_block+0xf4>
+				block_address[i+1] == 'e' && 
+ 230:	89 81       	ldd	r24, Y+1	; 0x01
+ 232:	88 37       	cpi	r24, 0x78	; 120
+ 234:	09 f0       	breq	.+2      	; 0x238 <check_block+0x6e>
+ 236:	43 c0       	rjmp	.+134    	; 0x2be <check_block+0xf4>
+				block_address[i+2] == 'x' &&
+ 238:	8a 81       	ldd	r24, Y+2	; 0x02
+ 23a:	84 37       	cpi	r24, 0x74	; 116
+ 23c:	09 f0       	breq	.+2      	; 0x240 <check_block+0x76>
+ 23e:	3f c0       	rjmp	.+126    	; 0x2be <check_block+0xf4>
+				block_address[i+3] == 't')
+			{
+
+				UPBIT(LEDPORT, LEDPIN);
+ 240:	a9 9a       	sbi	0x15, 1	; 21
+ 242:	83 e2       	ldi	r24, 0x23	; 35
+ 244:	94 ef       	ldi	r25, 0xF4	; 244
+ 246:	01 97       	sbiw	r24, 0x01	; 1
+ 248:	f1 f7       	brne	.-4      	; 0x246 <check_block+0x7c>
+ 24a:	00 c0       	rjmp	.+0      	; 0x24c <check_block+0x82>
+ 24c:	00 00       	nop
+				_delay_ms(250);
+				DOWNBIT(LEDPORT, LEDPIN);
+ 24e:	a9 98       	cbi	0x15, 1	; 21
+ 250:	83 e2       	ldi	r24, 0x23	; 35
+ 252:	94 ef       	ldi	r25, 0xF4	; 244
+ 254:	01 97       	sbiw	r24, 0x01	; 1
+ 256:	f1 f7       	brne	.-4      	; 0x254 <check_block+0x8a>
+ 258:	00 c0       	rjmp	.+0      	; 0x25a <check_block+0x90>
+ 25a:	00 00       	nop
+					PORTA = 0b01100000;
+					_delay_ms(300);
+				}
+*/				//_delay_ms(1000);
+				
+				init_abc(block_address + i + 4, length - i - 4); // munus bytes "text"
+ 25c:	b6 01       	movw	r22, r12
+ 25e:	60 1b       	sub	r22, r16
+ 260:	71 0b       	sbc	r23, r17
+ 262:	c7 01       	movw	r24, r14
+ 264:	55 df       	rcall	.-342    	; 0x110 <init_abc>
+ 266:	98 01       	movw	r18, r16
+
+				for (int j=i+4; j< length - 3; j++)
+ 268:	f7 01       	movw	r30, r14
+ 26a:	26 c0       	rjmp	.+76     	; 0x2b8 <check_block+0xee>
+				{
+					if (block_address[j] == 'm' && 
+ 26c:	81 91       	ld	r24, Z+
+ 26e:	8d 36       	cpi	r24, 0x6D	; 109
+ 270:	09 f5       	brne	.+66     	; 0x2b4 <check_block+0xea>
+ 272:	80 81       	ld	r24, Z
+ 274:	85 36       	cpi	r24, 0x65	; 101
+ 276:	f1 f4       	brne	.+60     	; 0x2b4 <check_block+0xea>
+						block_address[j+1] == 'e' && 
+ 278:	81 81       	ldd	r24, Z+1	; 0x01
+ 27a:	83 37       	cpi	r24, 0x73	; 115
+ 27c:	d9 f4       	brne	.+54     	; 0x2b4 <check_block+0xea>
+						block_address[j+2] == 's' &&
+ 27e:	82 81       	ldd	r24, Z+2	; 0x02
+ 280:	83 37       	cpi	r24, 0x73	; 115
+ 282:	c1 f4       	brne	.+48     	; 0x2b4 <check_block+0xea>
+						block_address[j+3] == 's')
+					{
+
+						UPBIT(LEDPORT, LEDPIN);
+ 284:	a9 9a       	sbi	0x15, 1	; 21
+ 286:	83 e2       	ldi	r24, 0x23	; 35
+ 288:	94 ef       	ldi	r25, 0xF4	; 244
+ 28a:	01 97       	sbiw	r24, 0x01	; 1
+ 28c:	f1 f7       	brne	.-4      	; 0x28a <check_block+0xc0>
+ 28e:	00 c0       	rjmp	.+0      	; 0x290 <check_block+0xc6>
+ 290:	00 00       	nop
+						_delay_ms(250);
+						DOWNBIT(LEDPORT, LEDPIN);
+ 292:	a9 98       	cbi	0x15, 1	; 21
+ 294:	83 e2       	ldi	r24, 0x23	; 35
+ 296:	94 ef       	ldi	r25, 0xF4	; 244
+ 298:	01 97       	sbiw	r24, 0x01	; 1
+ 29a:	f1 f7       	brne	.-4      	; 0x298 <check_block+0xce>
+ 29c:	00 c0       	rjmp	.+0      	; 0x29e <check_block+0xd4>
+ 29e:	00 00       	nop
+						_delay_ms(300);
+						PORTA = 0b01100000;
+						_delay_ms(300);
+						}
+*/
+						init_message(block_address + j + 4, length - j - 4);
+ 2a0:	c9 01       	movw	r24, r18
+ 2a2:	04 96       	adiw	r24, 0x04	; 4
+ 2a4:	b3 01       	movw	r22, r6
+ 2a6:	62 1b       	sub	r22, r18
+ 2a8:	73 0b       	sbc	r23, r19
+ 2aa:	8a 0d       	add	r24, r10
+ 2ac:	9b 1d       	adc	r25, r11
+ 2ae:	55 df       	rcall	.-342    	; 0x15a <init_message>
+
+						return 1;
+ 2b0:	81 e0       	ldi	r24, 0x01	; 1
+ 2b2:	14 c0       	rjmp	.+40     	; 0x2dc <check_block+0x112>
+				}
+*/				//_delay_ms(1000);
+				
+				init_abc(block_address + i + 4, length - i - 4); // munus bytes "text"
+
+				for (int j=i+4; j< length - 3; j++)
+ 2b4:	2f 5f       	subi	r18, 0xFF	; 255
+ 2b6:	3f 4f       	sbci	r19, 0xFF	; 255
+ 2b8:	28 15       	cp	r18, r8
+ 2ba:	39 05       	cpc	r19, r9
+ 2bc:	b8 f2       	brcs	.-82     	; 0x26c <check_block+0xa2>
+				
+
+			}
+			//_delay_ms(20);
+		}
+		INVBIT(LEDPORT, LEDPIN);
+ 2be:	85 b3       	in	r24, 0x15	; 21
+ 2c0:	85 25       	eor	r24, r5
+ 2c2:	85 bb       	out	0x15, r24	; 21
+ 2c4:	0f 5f       	subi	r16, 0xFF	; 255
+ 2c6:	1f 4f       	sbci	r17, 0xFF	; 255
+ 2c8:	08 94       	sec
+ 2ca:	e1 1c       	adc	r14, r1
+ 2cc:	f1 1c       	adc	r15, r1
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+
+char check_block(uint8_t *block_address, uint16_t length)
+{
+ 	for(int i = 0; i < length - 3 ; i++){
+ 2ce:	c8 01       	movw	r24, r16
+ 2d0:	04 97       	sbiw	r24, 0x04	; 4
+ 2d2:	88 15       	cp	r24, r8
+ 2d4:	99 05       	cpc	r25, r9
+ 2d6:	08 f4       	brcc	.+2      	; 0x2da <check_block+0x110>
+ 2d8:	a0 cf       	rjmp	.-192    	; 0x21a <check_block+0x50>
+			}
+			//_delay_ms(20);
+		}
+		INVBIT(LEDPORT, LEDPIN);
+	}
+	return 0;
+ 2da:	80 e0       	ldi	r24, 0x00	; 0
+}
+ 2dc:	df 91       	pop	r29
+ 2de:	cf 91       	pop	r28
+ 2e0:	1f 91       	pop	r17
+ 2e2:	0f 91       	pop	r16
+ 2e4:	ff 90       	pop	r15
+ 2e6:	ef 90       	pop	r14
+ 2e8:	df 90       	pop	r13
+ 2ea:	cf 90       	pop	r12
+ 2ec:	bf 90       	pop	r11
+ 2ee:	af 90       	pop	r10
+ 2f0:	9f 90       	pop	r9
+ 2f2:	8f 90       	pop	r8
+ 2f4:	7f 90       	pop	r7
+ 2f6:	6f 90       	pop	r6
+ 2f8:	5f 90       	pop	r5
+ 2fa:	08 95       	ret
+
+000002fc <signal>:
+
+void signal(int time)
+{
+	int my_time = time * MAINPUSETIME;
+
+	UPBIT(BIPERPORT, BIPERPIN);
+ 2fc:	a8 9a       	sbi	0x15, 0	; 21
+	UPBIT(LEDPORT, LEDPIN);
+ 2fe:	a9 9a       	sbi	0x15, 1	; 21
+
+	// 4Khz = 1/0 each 250 uS
+	// 4 switch per 1ms
+
+	my_time *= 8;
+ 300:	20 ef       	ldi	r18, 0xF0	; 240
+ 302:	30 e0       	ldi	r19, 0x00	; 0
+ 304:	ac 01       	movw	r20, r24
+ 306:	42 9f       	mul	r20, r18
+ 308:	c0 01       	movw	r24, r0
+ 30a:	43 9f       	mul	r20, r19
+ 30c:	90 0d       	add	r25, r0
+ 30e:	52 9f       	mul	r21, r18
+ 310:	90 0d       	add	r25, r0
+ 312:	11 24       	eor	r1, r1
+
+	while (my_time-- >= 0){
+		INVBIT(BIPERPORT, BIPERPIN);
+ 314:	31 e0       	ldi	r19, 0x01	; 1
+	// 4Khz = 1/0 each 250 uS
+	// 4 switch per 1ms
+
+	my_time *= 8;
+
+	while (my_time-- >= 0){
+ 316:	08 c0       	rjmp	.+16     	; 0x328 <signal+0x2c>
+		INVBIT(BIPERPORT, BIPERPIN);
+ 318:	25 b3       	in	r18, 0x15	; 21
+ 31a:	23 27       	eor	r18, r19
+ 31c:	25 bb       	out	0x15, r18	; 21
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 31e:	59 e2       	ldi	r21, 0x29	; 41
+ 320:	5a 95       	dec	r21
+ 322:	f1 f7       	brne	.-4      	; 0x320 <signal+0x24>
+ 324:	00 c0       	rjmp	.+0      	; 0x326 <signal+0x2a>
+ 326:	01 97       	sbiw	r24, 0x01	; 1
+	// 4Khz = 1/0 each 250 uS
+	// 4 switch per 1ms
+
+	my_time *= 8;
+
+	while (my_time-- >= 0){
+ 328:	97 ff       	sbrs	r25, 7
+ 32a:	f6 cf       	rjmp	.-20     	; 0x318 <signal+0x1c>
+		INVBIT(BIPERPORT, BIPERPIN);
+		_delay_us(125);
+	}
+
+	DOWNBIT(BIPERPORT, BIPERPIN);
+ 32c:	a8 98       	cbi	0x15, 0	; 21
+	DOWNBIT(LEDPORT, LEDPIN);
+ 32e:	a9 98       	cbi	0x15, 1	; 21
+}
+ 330:	08 95       	ret
+
+00000332 <morze_char>:
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+
+void morze_char(MORZE_SYMBOL simbol)
+{
+ 332:	ff 92       	push	r15
+ 334:	0f 93       	push	r16
+ 336:	1f 93       	push	r17
+ 338:	df 93       	push	r29
+ 33a:	cf 93       	push	r28
+ 33c:	00 d0       	rcall	.+0      	; 0x33e <morze_char+0xc>
+ 33e:	0f 92       	push	r0
+ 340:	cd b7       	in	r28, 0x3d	; 61
+ 342:	de b7       	in	r29, 0x3e	; 62
+ 344:	69 83       	std	Y+1, r22	; 0x01
+ 346:	7a 83       	std	Y+2, r23	; 0x02
+ 348:	8b 83       	std	Y+3, r24	; 0x03
+	char pos = 8; 
+	for (int i = 0; i < simbol.morsecodlen; i++){
+ 34a:	00 e0       	ldi	r16, 0x00	; 0
+ 34c:	10 e0       	ldi	r17, 0x00	; 0
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+
+void morze_char(MORZE_SYMBOL simbol)
+{
+	char pos = 8; 
+ 34e:	58 e0       	ldi	r21, 0x08	; 8
+ 350:	f5 2e       	mov	r15, r21
+	for (int i = 0; i < simbol.morsecodlen; i++){
+ 352:	1f c0       	rjmp	.+62     	; 0x392 <morze_char+0x60>
+		pos--;
+ 354:	fa 94       	dec	r15
+		if (simbol.morsecod & (1 << pos)){ // long 	
+ 356:	8a 81       	ldd	r24, Y+2	; 0x02
+ 358:	90 e0       	ldi	r25, 0x00	; 0
+ 35a:	0f 2c       	mov	r0, r15
+ 35c:	02 c0       	rjmp	.+4      	; 0x362 <morze_char+0x30>
+ 35e:	95 95       	asr	r25
+ 360:	87 95       	ror	r24
+ 362:	0a 94       	dec	r0
+ 364:	e2 f7       	brpl	.-8      	; 0x35e <morze_char+0x2c>
+ 366:	80 ff       	sbrs	r24, 0
+ 368:	08 c0       	rjmp	.+16     	; 0x37a <morze_char+0x48>
+			signal(LINEPAUSE);
+ 36a:	80 91 60 00 	lds	r24, 0x0060
+ 36e:	90 e0       	ldi	r25, 0x00	; 0
+ 370:	88 0f       	add	r24, r24
+ 372:	99 1f       	adc	r25, r25
+ 374:	88 0f       	add	r24, r24
+ 376:	99 1f       	adc	r25, r25
+ 378:	03 c0       	rjmp	.+6      	; 0x380 <morze_char+0x4e>
+		}else{	// short
+			signal(POINPAUSE);
+ 37a:	80 91 60 00 	lds	r24, 0x0060
+ 37e:	90 e0       	ldi	r25, 0x00	; 0
+ 380:	bd df       	rcall	.-134    	; 0x2fc <signal>
+		} 
+
+		DOWNBIT(BIPERPORT, BIPERPIN);
+ 382:	a8 98       	cbi	0x15, 0	; 21
+		DOWNBIT(LEDPORT, LEDPIN);
+ 384:	a9 98       	cbi	0x15, 1	; 21
+		morze_pause(WAITPAUSE);		
+ 386:	80 91 60 00 	lds	r24, 0x0060
+ 38a:	88 0f       	add	r24, r24
+ 38c:	b5 de       	rcall	.-662    	; 0xf8 <morze_pause>
+//--------------------------------------------------------------
+
+void morze_char(MORZE_SYMBOL simbol)
+{
+	char pos = 8; 
+	for (int i = 0; i < simbol.morsecodlen; i++){
+ 38e:	0f 5f       	subi	r16, 0xFF	; 255
+ 390:	1f 4f       	sbci	r17, 0xFF	; 255
+ 392:	8b 81       	ldd	r24, Y+3	; 0x03
+ 394:	90 e0       	ldi	r25, 0x00	; 0
+ 396:	08 17       	cp	r16, r24
+ 398:	19 07       	cpc	r17, r25
+ 39a:	e4 f2       	brlt	.-72     	; 0x354 <morze_char+0x22>
+		DOWNBIT(BIPERPORT, BIPERPIN);
+		DOWNBIT(LEDPORT, LEDPIN);
+		morze_pause(WAITPAUSE);		
+		//_delay_ms(WAITPAUSE);
+	}
+}
+ 39c:	0f 90       	pop	r0
+ 39e:	0f 90       	pop	r0
+ 3a0:	0f 90       	pop	r0
+ 3a2:	cf 91       	pop	r28
+ 3a4:	df 91       	pop	r29
+ 3a6:	1f 91       	pop	r17
+ 3a8:	0f 91       	pop	r16
+ 3aa:	ff 90       	pop	r15
+ 3ac:	08 95       	ret
+
+000003ae <morze_message>:
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+
+void morze_message(void)
+{
+ 3ae:	df 92       	push	r13
+ 3b0:	ef 92       	push	r14
+ 3b2:	ff 92       	push	r15
+ 3b4:	0f 93       	push	r16
+ 3b6:	1f 93       	push	r17
+ 3b8:	cf 93       	push	r28
+ 3ba:	df 93       	push	r29
+	for (char j = 1; j <= message[0]; j++)
+ 3bc:	dd 24       	eor	r13, r13
+ 3be:	d3 94       	inc	r13
+ 3c0:	1d c0       	rjmp	.+58     	; 0x3fc <morze_message+0x4e>
+	{
+		for (int i = 0; i < TOTALLEN; i++){
+			if (abc[i].code == message[j])
+ 3c2:	f8 01       	movw	r30, r16
+ 3c4:	90 81       	ld	r25, Z
+ 3c6:	f7 01       	movw	r30, r14
+ 3c8:	80 81       	ld	r24, Z
+ 3ca:	98 17       	cp	r25, r24
+ 3cc:	59 f4       	brne	.+22     	; 0x3e4 <morze_message+0x36>
+				morze_char(abc[i]);
+ 3ce:	fe 01       	movw	r30, r28
+ 3d0:	ee 0f       	add	r30, r30
+ 3d2:	ff 1f       	adc	r31, r31
+ 3d4:	ec 0f       	add	r30, r28
+ 3d6:	fd 1f       	adc	r31, r29
+ 3d8:	ef 59       	subi	r30, 0x9F	; 159
+ 3da:	ff 4f       	sbci	r31, 0xFF	; 255
+ 3dc:	60 81       	ld	r22, Z
+ 3de:	71 81       	ldd	r23, Z+1	; 0x01
+ 3e0:	82 81       	ldd	r24, Z+2	; 0x02
+ 3e2:	a7 df       	rcall	.-178    	; 0x332 <morze_char>
+
+void morze_message(void)
+{
+	for (char j = 1; j <= message[0]; j++)
+	{
+		for (int i = 0; i < TOTALLEN; i++){
+ 3e4:	21 96       	adiw	r28, 0x01	; 1
+ 3e6:	0d 5f       	subi	r16, 0xFD	; 253
+ 3e8:	1f 4f       	sbci	r17, 0xFF	; 255
+ 3ea:	ca 32       	cpi	r28, 0x2A	; 42
+ 3ec:	d1 05       	cpc	r29, r1
+ 3ee:	49 f7       	brne	.-46     	; 0x3c2 <morze_message+0x14>
+			if (i == TOTALLEN){
+				//morze_pause(UNKNOWNSIMBOLPAUSE);
+				_delay_ms(UNKNOWNSIMBOLPAUSE);
+			}
+		}
+		morze_pause(SEPARATEPAUSE);
+ 3f0:	80 91 60 00 	lds	r24, 0x0060
+ 3f4:	88 0f       	add	r24, r24
+ 3f6:	88 0f       	add	r24, r24
+ 3f8:	7f de       	rcall	.-770    	; 0xf8 <morze_pause>
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+
+void morze_message(void)
+{
+	for (char j = 1; j <= message[0]; j++)
+ 3fa:	d3 94       	inc	r13
+ 3fc:	80 91 dc 00 	lds	r24, 0x00DC
+ 400:	8d 15       	cp	r24, r13
+ 402:	58 f0       	brcs	.+22     	; 0x41a <morze_message+0x6c>
+ 404:	01 e6       	ldi	r16, 0x61	; 97
+ 406:	10 e0       	ldi	r17, 0x00	; 0
+ 408:	c0 e0       	ldi	r28, 0x00	; 0
+ 40a:	d0 e0       	ldi	r29, 0x00	; 0
+	{
+		for (int i = 0; i < TOTALLEN; i++){
+			if (abc[i].code == message[j])
+ 40c:	ed 2c       	mov	r14, r13
+ 40e:	ff 24       	eor	r15, r15
+ 410:	8c ed       	ldi	r24, 0xDC	; 220
+ 412:	90 e0       	ldi	r25, 0x00	; 0
+ 414:	e8 0e       	add	r14, r24
+ 416:	f9 1e       	adc	r15, r25
+ 418:	d4 cf       	rjmp	.-88     	; 0x3c2 <morze_message+0x14>
+		morze_pause(SEPARATEPAUSE);
+		//_delay_ms(SEPARATEPAUSE);
+				
+	}
+ //INVBIT(PORTA, 7);
+}
+ 41a:	df 91       	pop	r29
+ 41c:	cf 91       	pop	r28
+ 41e:	1f 91       	pop	r17
+ 420:	0f 91       	pop	r16
+ 422:	ff 90       	pop	r15
+ 424:	ef 90       	pop	r14
+ 426:	df 90       	pop	r13
+ 428:	08 95       	ret
+
+0000042a <mmc_response>:
+//--------------------------------------------------------------//
+//--------------------------------------------------------------//
+//--------------------------------------------------------------//
+
+uint8_t mmc_response(uint8_t response)
+{
+ 42a:	1f 93       	push	r17
+ 42c:	cf 93       	push	r28
+ 42e:	df 93       	push	r29
+ 430:	18 2f       	mov	r17, r24
+ 432:	cf ef       	ldi	r28, 0xFF	; 255
+ 434:	df e0       	ldi	r29, 0x0F	; 15
+  uint16_t count = 0xFFF;
+  uint8_t result;
+
+  while(count > 0)
+  {
+    result = spi_receive_byte();
+ 436:	1f de       	rcall	.-962    	; 0x76 <spi_receive_byte>
+    if (result == response)
+ 438:	81 17       	cp	r24, r17
+ 43a:	21 f0       	breq	.+8      	; 0x444 <mmc_response+0x1a>
+ 43c:	21 97       	sbiw	r28, 0x01	; 1
+uint8_t mmc_response(uint8_t response)
+{
+  uint16_t count = 0xFFF;
+  uint8_t result;
+
+  while(count > 0)
+ 43e:	d9 f7       	brne	.-10     	; 0x436 <mmc_response+0xc>
+      break;
+    count--;
+  }
+
+  if (count == 0){
+    return 1; /* Failure, loop was exited due to timeout */
+ 440:	81 e0       	ldi	r24, 0x01	; 1
+ 442:	01 c0       	rjmp	.+2      	; 0x446 <mmc_response+0x1c>
+  }
+
+  return 0; /* Normal, loop was exited before timeout */
+ 444:	80 e0       	ldi	r24, 0x00	; 0
+}
+ 446:	df 91       	pop	r29
+ 448:	cf 91       	pop	r28
+ 44a:	1f 91       	pop	r17
+ 44c:	08 95       	ret
+
+0000044e <mmc_init>:
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+
+void mmc_init(void)
+{
+ 44e:	ff 92       	push	r15
+ 450:	0f 93       	push	r16
+ 452:	1f 93       	push	r17
+  uint8_t i;
+  uint8_t byte;
+
+  /* Init the CS output */
+  DDR_CS |= _BV(DD_CS);
+ 454:	ba 9a       	sbi	0x17, 2	; 23
+
+  SET_CS();
+ 456:	c2 9a       	sbi	0x18, 2	; 24
+ 458:	1a e0       	ldi	r17, 0x0A	; 10
+  {
+    /* Init the card in SPI mode by sending 80 clks */
+    for(i = 0; i < 10; i++)
+      byte = spi_receive_byte();
+ 45a:	0d de       	rcall	.-998    	; 0x76 <spi_receive_byte>
+ 45c:	11 50       	subi	r17, 0x01	; 1
+  DDR_CS |= _BV(DD_CS);
+
+  SET_CS();
+  {
+    /* Init the card in SPI mode by sending 80 clks */
+    for(i = 0; i < 10; i++)
+ 45e:	e9 f7       	brne	.-6      	; 0x45a <mmc_init+0xc>
+      byte = spi_receive_byte();
+  }
+  CLEAR_CS();
+ 460:	c2 98       	cbi	0x18, 2	; 24
+
+
+
+  /* Send CMD0 GO_IDLE_STATE */
+  mmc_cmd[0] = 0x40;
+ 462:	80 e4       	ldi	r24, 0x40	; 64
+ 464:	80 93 dc 01 	sts	0x01DC, r24
+  mmc_cmd[1] = 0x00;
+ 468:	10 92 dd 01 	sts	0x01DD, r1
+  mmc_cmd[2] = 0x00;
+ 46c:	10 92 de 01 	sts	0x01DE, r1
+  mmc_cmd[3] = 0x00;
+ 470:	10 92 df 01 	sts	0x01DF, r1
+  mmc_cmd[4] = 0x00;
+ 474:	10 92 e0 01 	sts	0x01E0, r1
+  mmc_cmd[5] = 0x95;
+ 478:	85 e9       	ldi	r24, 0x95	; 149
+ 47a:	80 93 e1 01 	sts	0x01E1, r24
+  spi_send(mmc_cmd, MMC_CMD_SIZE);
+ 47e:	8c ed       	ldi	r24, 0xDC	; 220
+ 480:	91 e0       	ldi	r25, 0x01	; 1
+ 482:	66 e0       	ldi	r22, 0x06	; 6
+ 484:	70 e0       	ldi	r23, 0x00	; 0
+ 486:	02 de       	rcall	.-1020   	; 0x8c <spi_send>
+
+  if (mmc_response(0x01))
+ 488:	81 e0       	ldi	r24, 0x01	; 1
+ 48a:	cf df       	rcall	.-98     	; 0x42a <mmc_response>
+ 48c:	88 23       	and	r24, r24
+ 48e:	11 f0       	breq	.+4      	; 0x494 <__stack+0x35>
+  {
+    PORTC |= 0x10;
+ 490:	ac 9a       	sbi	0x15, 4	; 21
+    return;
+ 492:	3c c0       	rjmp	.+120    	; 0x50c <__stack+0xad>
+  }
+
+  /* Send some dummy clocks after GO_IDLE_STATE */
+  SET_CS();
+ 494:	c2 9a       	sbi	0x18, 2	; 24
+  spi_receive_byte();
+ 496:	ef dd       	rcall	.-1058   	; 0x76 <spi_receive_byte>
+  CLEAR_CS();
+ 498:	c2 98       	cbi	0x18, 2	; 24
+
+
+  /* Send CMD1 SEND_OP_COND until response is 0 */
+  i = MMC_TIMEOUT;
+ 49a:	1f ef       	ldi	r17, 0xFF	; 255
+  do
+  {
+    mmc_cmd[0] = 0x41;
+ 49c:	71 e4       	ldi	r23, 0x41	; 65
+ 49e:	f7 2e       	mov	r15, r23
+    mmc_cmd[1] = 0x00;
+    mmc_cmd[2] = 0x00;
+    mmc_cmd[3] = 0x00;
+    mmc_cmd[4] = 0x00;
+    mmc_cmd[5] = 0xFF;
+ 4a0:	0f ef       	ldi	r16, 0xFF	; 255
+
+  /* Send CMD1 SEND_OP_COND until response is 0 */
+  i = MMC_TIMEOUT;
+  do
+  {
+    mmc_cmd[0] = 0x41;
+ 4a2:	f0 92 dc 01 	sts	0x01DC, r15
+    mmc_cmd[1] = 0x00;
+ 4a6:	10 92 dd 01 	sts	0x01DD, r1
+    mmc_cmd[2] = 0x00;
+ 4aa:	10 92 de 01 	sts	0x01DE, r1
+    mmc_cmd[3] = 0x00;
+ 4ae:	10 92 df 01 	sts	0x01DF, r1
+    mmc_cmd[4] = 0x00;
+ 4b2:	10 92 e0 01 	sts	0x01E0, r1
+    mmc_cmd[5] = 0xFF;
+ 4b6:	00 93 e1 01 	sts	0x01E1, r16
+    spi_send(mmc_cmd, MMC_CMD_SIZE);
+ 4ba:	8c ed       	ldi	r24, 0xDC	; 220
+ 4bc:	91 e0       	ldi	r25, 0x01	; 1
+ 4be:	66 e0       	ldi	r22, 0x06	; 6
+ 4c0:	70 e0       	ldi	r23, 0x00	; 0
+ 4c2:	e4 dd       	rcall	.-1080   	; 0x8c <spi_send>
+    i--;
+ 4c4:	11 50       	subi	r17, 0x01	; 1
+  } while((mmc_response(0x00) != 0) && (i > 0));
+ 4c6:	80 e0       	ldi	r24, 0x00	; 0
+ 4c8:	b0 df       	rcall	.-160    	; 0x42a <mmc_response>
+ 4ca:	88 23       	and	r24, r24
+ 4cc:	19 f0       	breq	.+6      	; 0x4d4 <__stack+0x75>
+ 4ce:	11 23       	and	r17, r17
+ 4d0:	41 f7       	brne	.-48     	; 0x4a2 <__stack+0x43>
+ 4d2:	1c c0       	rjmp	.+56     	; 0x50c <__stack+0xad>
+
+  if (i == 0)
+ 4d4:	11 23       	and	r17, r17
+ 4d6:	d1 f0       	breq	.+52     	; 0x50c <__stack+0xad>
+    return;
+  }
+
+
+  /* Send some dummy clocks after GO_IDLE_STATE */
+  SET_CS();
+ 4d8:	c2 9a       	sbi	0x18, 2	; 24
+  spi_receive_byte();
+ 4da:	cd dd       	rcall	.-1126   	; 0x76 <spi_receive_byte>
+  CLEAR_CS();
+ 4dc:	c2 98       	cbi	0x18, 2	; 24
+
+
+  /* Send CMD16 SET_BLOCKLEN to set the block length */
+  mmc_cmd[0] = 0x50;
+ 4de:	80 e5       	ldi	r24, 0x50	; 80
+ 4e0:	80 93 dc 01 	sts	0x01DC, r24
+  mmc_cmd[1] = 0x00;   /* 4 bytes from here is the block length */
+ 4e4:	10 92 dd 01 	sts	0x01DD, r1
+                       /* LSB is first */
+                       /* 00 00 00 10 set to 16 bytes */
+                       /* 00 00 02 00 set to 512 bytes */
+  mmc_cmd[2] = 0x00;
+ 4e8:	10 92 de 01 	sts	0x01DE, r1
+  /* high block length bits - 512 bytes */
+  mmc_cmd[3] = 0x02;
+ 4ec:	82 e0       	ldi	r24, 0x02	; 2
+ 4ee:	80 93 df 01 	sts	0x01DF, r24
+  /* low block length bits */
+  mmc_cmd[4] = 0x00;
+ 4f2:	10 92 e0 01 	sts	0x01E0, r1
+  mmc_cmd[5] = 0xFF; /* checksum is no longer required but we always send 0xFF */
+ 4f6:	00 93 e1 01 	sts	0x01E1, r16
+  spi_send(mmc_cmd, MMC_CMD_SIZE);
+ 4fa:	8c ed       	ldi	r24, 0xDC	; 220
+ 4fc:	91 e0       	ldi	r25, 0x01	; 1
+ 4fe:	66 e0       	ldi	r22, 0x06	; 6
+ 500:	70 e0       	ldi	r23, 0x00	; 0
+ 502:	c4 dd       	rcall	.-1144   	; 0x8c <spi_send>
+
+  if ((mmc_response(0x00)) == 1)
+ 504:	80 e0       	ldi	r24, 0x00	; 0
+ 506:	91 df       	rcall	.-222    	; 0x42a <mmc_response>
+  {
+    ;
+  }
+
+  SET_CS();
+ 508:	c2 9a       	sbi	0x18, 2	; 24
+  spi_receive_byte();
+ 50a:	b5 dd       	rcall	.-1174   	; 0x76 <spi_receive_byte>
+
+
+}
+ 50c:	1f 91       	pop	r17
+ 50e:	0f 91       	pop	r16
+ 510:	ff 90       	pop	r15
+ 512:	08 95       	ret
+
+00000514 <mmc_read_block>:
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+
+void mmc_read_block(uint16_t block_number, uint8_t* block_address)
+{
+ 514:	cf 93       	push	r28
+ 516:	df 93       	push	r29
+ 518:	eb 01       	movw	r28, r22
+  uint16_t checksum;
+  uint16_t varh, varl;
+
+  varl = ((block_number & 0x003F) << 9);
+ 51a:	9c 01       	movw	r18, r24
+ 51c:	2f 73       	andi	r18, 0x3F	; 63
+ 51e:	30 70       	andi	r19, 0x00	; 0
+ 520:	22 0f       	add	r18, r18
+  varh = ((block_number & 0xFFC0) >> 7);
+ 522:	88 0f       	add	r24, r24
+ 524:	89 2f       	mov	r24, r25
+ 526:	88 1f       	adc	r24, r24
+ 528:	99 0b       	sbc	r25, r25
+ 52a:	91 95       	neg	r25
+
+ 
+
+  CLEAR_CS();
+ 52c:	c2 98       	cbi	0x18, 2	; 24
+  {
+    /* send MMC CMD17(READ_SINGLE_BLOCK) to read the data from MMC card */
+    mmc_cmd[0] = 0x51;
+ 52e:	31 e5       	ldi	r19, 0x51	; 81
+ 530:	30 93 dc 01 	sts	0x01DC, r19
+    /* high block address bits, varh HIGH and LOW */
+    mmc_cmd[1] = varh >> 0x08;
+ 534:	90 93 dd 01 	sts	0x01DD, r25
+    mmc_cmd[2] = varh & 0xFF;
+ 538:	80 93 de 01 	sts	0x01DE, r24
+    /* low block address bits, varl HIGH and LOW */
+    mmc_cmd[3] = varl >> 0x08;
+ 53c:	20 93 df 01 	sts	0x01DF, r18
+    mmc_cmd[4] = varl & 0xFF;
+ 540:	10 92 e0 01 	sts	0x01E0, r1
+    /* checksum is no longer required but we always send 0xFF */
+    mmc_cmd[5] = 0xFF;
+ 544:	8f ef       	ldi	r24, 0xFF	; 255
+ 546:	80 93 e1 01 	sts	0x01E1, r24
+    spi_send(mmc_cmd, MMC_CMD_SIZE);
+ 54a:	8c ed       	ldi	r24, 0xDC	; 220
+ 54c:	91 e0       	ldi	r25, 0x01	; 1
+ 54e:	66 e0       	ldi	r22, 0x06	; 6
+ 550:	70 e0       	ldi	r23, 0x00	; 0
+ 552:	9c dd       	rcall	.-1224   	; 0x8c <spi_send>
+
+    /* if mmc_response returns 1 then we failed to get a 0x00 response */
+    if ((mmc_response(0x00)) == 1)
+ 554:	80 e0       	ldi	r24, 0x00	; 0
+ 556:	69 df       	rcall	.-302    	; 0x42a <mmc_response>
+ 558:	81 30       	cpi	r24, 0x01	; 1
+ 55a:	61 f0       	breq	.+24     	; 0x574 <mmc_read_block+0x60>
+    {
+      return;
+    }
+
+    /* wait for data token */
+    if ((mmc_response(0xFE)) == 1)
+ 55c:	8e ef       	ldi	r24, 0xFE	; 254
+ 55e:	65 df       	rcall	.-310    	; 0x42a <mmc_response>
+ 560:	81 30       	cpi	r24, 0x01	; 1
+ 562:	41 f0       	breq	.+16     	; 0x574 <mmc_read_block+0x60>
+    }
+
+ 
+
+    /* Get the block of data based on the length */
+    spi_receive(block_address, MMC_BLOCK_SIZE);
+ 564:	ce 01       	movw	r24, r28
+ 566:	60 e0       	ldi	r22, 0x00	; 0
+ 568:	72 e0       	ldi	r23, 0x02	; 2
+ 56a:	ab dd       	rcall	.-1194   	; 0xc2 <spi_receive>
+
+    /* CRC bytes that are not needed */
+    checksum = spi_receive_byte();
+ 56c:	84 dd       	rcall	.-1272   	; 0x76 <spi_receive_byte>
+    checksum = checksum << 0x08 | spi_receive_byte();
+ 56e:	83 dd       	rcall	.-1274   	; 0x76 <spi_receive_byte>
+  }
+  SET_CS();
+ 570:	c2 9a       	sbi	0x18, 2	; 24
+  
+  spi_receive_byte();
+ 572:	81 dd       	rcall	.-1278   	; 0x76 <spi_receive_byte>
+  
+}
+ 574:	df 91       	pop	r29
+ 576:	cf 91       	pop	r28
+ 578:	08 95       	ret
+
+0000057a <main>:
+//--------------------------------------------------------------//		
+																//
+uint8_t mmc_block[MMC_BLOCK_SIZE];								//
+																//
+int main (void)													//
+{	
+ 57a:	cf 93       	push	r28
+ 57c:	df 93       	push	r29
+//	DDRC=0xff;
+//	DDRA=0xf0;															//
+																//
+	UPBIT(BIPERDDR, BIPERPIN);									//
+ 57e:	a0 9a       	sbi	0x14, 0	; 20
+	UPBIT(LEDDDR, LEDPIN);										//
+ 580:	a1 9a       	sbi	0x14, 1	; 20
+																//
+																//
+																//
+  	// Init the SPI 											//
+	spi_init();													//
+ 582:	6d dd       	rcall	.-1318   	; 0x5e <spi_init>
+  																//
+  	// Init the MMC 											//
+  	mmc_init();													//
+ 584:	64 df       	rcall	.-312    	; 0x44e <mmc_init>
+ 																//
+																//
+  	// Read the blocks 											//
+  	int blockNumber = STARTREADEDBLOCK;							//
+ 586:	cd e4       	ldi	r28, 0x4D	; 77
+ 588:	d0 e0       	ldi	r29, 0x00	; 0
+																//
+	while (blockNumber++ >= 0){									//
+ 58a:	21 96       	adiw	r28, 0x01	; 1
+																//
+		// Reset the MMC buffer 								//
+	  	memset(mmc_block, 0x11, MMC_BLOCK_SIZE);				//
+ 58c:	82 ee       	ldi	r24, 0xE2	; 226
+ 58e:	91 e0       	ldi	r25, 0x01	; 1
+ 590:	61 e1       	ldi	r22, 0x11	; 17
+ 592:	70 e0       	ldi	r23, 0x00	; 0
+ 594:	40 e0       	ldi	r20, 0x00	; 0
+ 596:	52 e0       	ldi	r21, 0x02	; 2
+ 598:	16 d0       	rcall	.+44     	; 0x5c6 <memset>
+		// Read block											//
+		mmc_read_block(blockNumber, mmc_block);					//
+ 59a:	ce 01       	movw	r24, r28
+ 59c:	62 ee       	ldi	r22, 0xE2	; 226
+ 59e:	71 e0       	ldi	r23, 0x01	; 1
+ 5a0:	b9 df       	rcall	.-142    	; 0x514 <mmc_read_block>
+		// Check block for my data								//
+		if(check_block(mmc_block, MMC_BLOCK_SIZE))				//
+ 5a2:	82 ee       	ldi	r24, 0xE2	; 226
+ 5a4:	91 e0       	ldi	r25, 0x01	; 1
+ 5a6:	60 e0       	ldi	r22, 0x00	; 0
+ 5a8:	72 e0       	ldi	r23, 0x02	; 2
+ 5aa:	0f de       	rcall	.-994    	; 0x1ca <check_block>
+ 5ac:	88 23       	and	r24, r24
+ 5ae:	69 f3       	breq	.-38     	; 0x58a <main+0x10>
+			break;												//
+	}															//
+																//
+  	// Infinite loop 											//
+  	for(;;){													//
+  		morze_message();										//
+ 5b0:	fe de       	rcall	.-516    	; 0x3ae <morze_message>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 5b2:	8f e7       	ldi	r24, 0x7F	; 127
+ 5b4:	94 e8       	ldi	r25, 0x84	; 132
+ 5b6:	ae e1       	ldi	r26, 0x1E	; 30
+ 5b8:	81 50       	subi	r24, 0x01	; 1
+ 5ba:	90 40       	sbci	r25, 0x00	; 0
+ 5bc:	a0 40       	sbci	r26, 0x00	; 0
+ 5be:	e1 f7       	brne	.-8      	; 0x5b8 <main+0x3e>
+ 5c0:	00 c0       	rjmp	.+0      	; 0x5c2 <main+0x48>
+ 5c2:	00 00       	nop
+ 5c4:	f5 cf       	rjmp	.-22     	; 0x5b0 <main+0x36>
+
+000005c6 <memset>:
+ 5c6:	dc 01       	movw	r26, r24
+ 5c8:	01 c0       	rjmp	.+2      	; 0x5cc <memset+0x6>
+ 5ca:	6d 93       	st	X+, r22
+ 5cc:	41 50       	subi	r20, 0x01	; 1
+ 5ce:	50 40       	sbci	r21, 0x00	; 0
+ 5d0:	e0 f7       	brcc	.-8      	; 0x5ca <memset+0x4>
+ 5d2:	08 95       	ret
+
+000005d4 <_exit>:
+ 5d4:	f8 94       	cli
+
+000005d6 <__stop_program>:
+ 5d6:	ff cf       	rjmp	.-2      	; 0x5d6 <__stop_program>
