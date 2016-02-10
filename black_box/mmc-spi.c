@@ -13,6 +13,11 @@
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 
+#define BIPERPORT PORTC
+#define BIPERPIN 5
+#define LEDPORT PORTC
+#define LEDPIN 4
+
 #define POINPAUSE			PointTime * 50
 #define LINEPAUSE			POINPAUSE * 4
 #define WAITPAUSE			POINPAUSE
@@ -164,22 +169,45 @@ char check_block(uint8_t *block_address, uint16_t length)
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 //--------------------------------------------------------------
+
+void signal(int time)
+{
+	UPBIT(BIPERPORT, BIPERPIN);
+	UPBIT(LEDPORT, LEDPIN);
+
+	// 4Khz = 1/0 each 250 uS
+	// 4 switch per 1ms
+	while (time * 4 >= 0){
+		INVBIT(BIPERPORT, BIPERPIN);
+		_delay_us(250);
+	}
+
+	DOWNBIT(BIPERPORT, BIPERPIN);
+	DOWNBIT(LEDPORT, LEDPIN);
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+
 void morze_char(MORZE_SYMBOL simbol)
 {
 	char pos = 8; 
 	for (int i = 0; i < simbol.morsecodlen; i++){
 		pos--;
 		if (simbol.morsecod & (1 << pos)){ // long 	
-			PORTC = 0xff;
-			_delay_ms(LINEPAUSE);		
+			signal(LINEPAUSE);
 		}else{	// short
-			PORTC = 0xff;
-			_delay_ms(POINPAUSE);		
+			signal(POINPAUSE);
 		} 
 		PORTC = 0x00;
 		_delay_ms(WAITPAUSE);		
 	}
 }
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+//--------------------------------------------------------------
 
 void morze_message(void)
 {
